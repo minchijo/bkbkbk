@@ -9,7 +9,7 @@ pageEncoding="UTF-8"%>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" href="img/pages/icon.png" type="image/png">
-        <title>Pages</title>
+        <title>북북북 | 나의 서재</title>
         <!-- Bootstrap Css -->
         <link rel="stylesheet" href="../vender/bootstrap/css/bootstrap.min.css">
         <!-- Icofont Css -->
@@ -25,6 +25,8 @@ pageEncoding="UTF-8"%>
         <link rel="stylesheet" href="../css/style.css">
         <!-- Common Css -->
         <link rel="stylesheet" href="../css/common.css">
+		<!--user-myLibrary CSS-->
+		<link rel="stylesheet" href="../css/user-myLibrary.css">
     </head>
     <body>
         
@@ -32,62 +34,43 @@ pageEncoding="UTF-8"%>
             <!-- navbar -->
             <div class="elements-nav">
                 <!-- bootom nav -->
-                <nav class="navbar osahan-main-nav navbar-expand bottom-nav bg-black borer-bottom border-opacity-10 border-white py-lg-0 py-3 bg-opacity-25">
-                    <div class="container">
-                        <div class="position-relative d-flex align-items-center gap-2 site-brand">
-                            <i class="ri-slideshow-line fs-2 lh-1 text-white"></i>
-                            <div class="lh-1">
-                               <h5 class="fw-bold m-0 text-white">Software</h5>
-                               <small class="text-muted text-white-50">One Page</small>
-                            </div>
-                            <a class="stretched-link" href="index.html"></a>
-                        </div>
-                        <div class="collapse navbar-collapse">
-                            <ul class="navbar-nav m-auto gap-4 m-none">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="index.html"><i class="ri-apps-2-line"></i> Home</a>
-                                </li>
-                                
-								<li class="nav-item dropdown single-dropdown-nav">
-								                          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 나의 서재 </a>
-								                          <ul class="dropdown-menu">
-								                              <li><a class="dropdown-item" href="pages/portfolio-full-width.html">읽은 책</a></li>
-								                              <li><a class="dropdown-item" href="pages/portfolio-boxed.html">읽고 있는 책</a></li>
-								                              <li><a class="dropdown-item" href="pages/portfolio-classic.html">읽고 싶은 책</a></li>
-								                          </ul>
-								                      </li>
-                                <li class="nav-item dropdown single-dropdown-nav">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 나의 캐릭터 </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="shop-product-grid.html">Product Grid</a></li>
-                                        <li><a class="dropdown-item" href="shop-product-list.html">Product List</a></li>
-                                        <li><a class="dropdown-item" href="shop-product-full-three-coulmn.html">Product Three Coulmns</a></li>
-                                        <li><a class="dropdown-item" href="shop-product-full-four-coulmn.html">Product Four Coulmns</a></li>
-                                        <li><a class="dropdown-item" href="shop-product-detail.html">Product Detail</a></li>
-                                        <li><a class="dropdown-item" href="shop-cart.html">Shop Cart</a></li>
-                                        <li><a class="dropdown-item" href="shop-checkout.html">Shop Checkout</a></li>
-                                    </ul>
-                                </li>
-								
-								
-								<li class="nav-item dropdown single-dropdown-nav">
-								                           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 나의 정보 </a>
-								                           <ul class="dropdown-menu">
-								                               <li><a class="dropdown-item" href="pages/portfolio-full-width.html">나의 정보</a></li>
-								                               <li><a class="dropdown-item" href="pages/portfolio-boxed.html">나의 달력</a></li>
-								                               <li><a class="dropdown-item" href="pages/portfolio-classic.html">나의 메모</a></li>
-								                               <li><a class="dropdown-item" href="pages/portfolio-classic.html">나의 통계</a></li>
-								                           </ul>
-								                       </li>
-														</ul>
-													</li>
-												</ul>
-                            <a href="index.html" class="btn btn-purple rounded-pill d-none d-lg-block btn-theme"> <i class="ri-shopping-cart-line me-2"></i> Purchase Now </a>
-                            <a href="#" class="link-light d-lg-none ms-auto" data-bs-toggle="offcanvas" data-bs-target="#sidebarnav" aria-controls="sidebarnav"><i class="ri-menu-3-line ri-lg"></i></a>
-                        </div>
-                    </div>
-                </nav>
-            </div>
+				<nav id="header" class="navbar navbar-expand bottom-nav bg-black borer-bottom border-opacity-10 border-white py-lg-0 py-3 bg-opacity-25">
+				                    <div class="container">
+				                        <div class="position-relative d-flex align-items-center gap-2 site-brand">
+				                            <img src="../img/bookbookbookLogo.png" alt="북북북 로고">
+				                            <div class="lh-1">
+				                               <h5 class="fw-bold m-0">BOOKBOOKBOOK</h5>
+				                               <!-- <small class="text-muted text-white-50">One Page</small> -->
+				                            </div>
+				                            <a class="stretched-link" href="/"></a>
+				                        </div>
+				                        <div class="collapse navbar-collapse">
+				                            <ul class="navbar-nav m-auto gap-4 m-none">
+				                                <li class="nav-item dropdown single-dropdown-nav">
+
+				                     <a class="nav-link " href="#" role="button" aria-expanded="false"> 나의 서재 </a>
+				                     
+				                 </li>
+				                 <li>
+				                     <a class="nav-link" href="#" role="button" aria-expanded="false"> 나의 캐릭터 </a>
+				                 </li>
+				                 <li class="nav-item dropdown single-dropdown-nav">
+				                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 나의 정보 </a>
+				                     <ul class="dropdown-menu">
+				                         <li><a class="dropdown-item" href="shop-product-grid.html">나의 정보</a></li>
+				                         <li><a class="dropdown-item" href="shop-product-list.html">나의 달력</a></li>
+				                         <li><a class="dropdown-item" href="shop-product-full-three-coulmn.html">나의 메모</a></li>
+				                         <li><a class="dropdown-item" href="shop-product-full-four-coulmn.html">나의 통계</a></li>
+				                     </ul>
+				                 </li>
+				             </ul>
+				             <a href="./page-login.html" class="btn btn-purple rounded-pill d-none d-lg-block btn-theme"> 로그인 </a>
+				             <a href="#" class="link-light d-lg-none ms-auto" data-bs-toggle="offcanvas" data-bs-target="#sidebarnav" aria-controls="sidebarnav">
+				                 <i class="ri-menu-3-line ri-lg"></i>
+				             </a>
+				         </div>
+				     </div>
+				 </nav>
             <!-- header -->
             
     
@@ -99,16 +82,42 @@ pageEncoding="UTF-8"%>
 			            <div class="col-12">
 			                <nav>
 			                    <div class="nav nav-tabs d-flex justify-content-center gap-2 nav-tabs-osahan" id="nav-tab" role="tablist">
-			                        <button class="nav-link active px-lg-4 py-lg-3" id="nav-description-tab" data-bs-toggle="tab" data-bs-target="#nav-description" type="button" role="tab" aria-controls="nav-description" aria-selected="true">읽은 책</button>
-			                        <button class="nav-link px-lg-4 py-lg-3" id="nav-additional-information-tab" data-bs-toggle="tab" data-bs-target="#nav-additional-information" type="button" role="tab" aria-controls="nav-additional-information" aria-selected="false">읽고 있는 책</button>
-			                        <button class="nav-link px-lg-4 py-lg-3" id="nav-reviews-tab" data-bs-toggle="tab" data-bs-target="#nav-reviews" type="button" role="tab" aria-controls="nav-reviews" aria-selected="false">읽고 싶은 책</button>
+			                        <button class="nav-link active px-lg-4 py-lg-3" id="nav-first-page-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all" aria-selected="true">전체</button>
+			                        <button class="nav-link px-lg-4 py-lg-3" id="nav-read-tab" data-bs-toggle="tab" data-bs-target="#nav-read" type="button" role="tab" aria-controls="nav-read" aria-selected="false">읽은 책</button>
+			                        <button class="nav-link px-lg-4 py-lg-3" id="nav-reading-tab" data-bs-toggle="tab" data-bs-target="#nav-reading" type="button" role="tab" aria-controls="nav-reading" aria-selected="false">읽고 있는 책</button>
+			                        <button class="nav-link px-lg-4 py-lg-3" id="nav-wishlist-tab" data-bs-toggle="tab" data-bs-target="#nav-wishlist" type="button" role="tab" aria-controls="nav-wishlist" aria-selected="false">읽고 싶은 책</button>
 			                    </div>
 			                </nav>
-
-			                <!-- 읽은 책 탭팬 -->
 			                <div class="tab-content bg-white p-lg-5 p-4 border-end border-bottom border-start" id="nav-tabContent">
-			                    <div class="tab-pane fade show active" id="nav-description" role="tabpanel" aria-labelledby="nav-description-tab" tabindex="0">
-			                        <!-- 1번: 책 목록 (동적으로 생성될 예정) -->
+								<!-- 전체 탭 팬 -->
+								            <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-first-page-tab" tabindex="0">
+								                <!-- 임시 데이터가 있는 경우 -->
+								                <div id="with-data">
+								                    <div class="stage-character">
+								                        <div class="stage">1단계</div>
+								                        <img src="../img/pixeled_little_corgi.png" alt="캐릭터 이미지" class="character-image">
+								                        <div class="book-spines">
+								                            <div class="book-spine">스프링 부트 3 백...</div>
+								                            <div class="book-spine">다정한 수학책-내...</div>
+								                            <div class="book-spine">손자병법</div>
+								                            <div class="book-spine">원쌤의 리액트 퀵...</div>
+								                            <div class="book-spine">IT 회사에 간 문과 여자</div>
+								                        </div>
+								                    </div>
+								                </div>
+									                       <!-- 임시 데이터가 없는 경우 -->
+									                       <div id="without-data" class="d-none">
+									                           <p>읽은 책이 없습니다!</p>
+									                           <div class="d-flex justify-content-center">
+									                               <a href="#" class="btn btn-primary mx-2">베스트셀러 구경하러 가기</a>
+									                               <a href="#" class="btn btn-secondary mx-2">추천 받기</a>
+									                               <a href="#" class="btn btn-success mx-2">읽은 책 등록하기</a>
+									                           </div> <!--end of d-flex justify-content-center-->
+									                       </div> <!-- end of #without-data-->
+			                    </div>
+
+			                    <!-- 읽은 책 탭 팬 -->
+			                    <div class="tab-pane fade" id="nav-read" role="tabpanel" aria-labelledby="nav-read-tab" tabindex="0">
 			                        <div id="read-list">
 			                            <!-- 책 항목 예시 (실제로는 서버에서 동적으로 생성) -->
 			                            <div class="book-item d-flex align-items-start mb-4">
@@ -129,15 +138,14 @@ pageEncoding="UTF-8"%>
 			                                </div>
 			                            </div>
 			                        </div>
-
 			                        <!-- 4번: 정렬 버튼 -->
 			                        <div class="text-end mt-3">
 			                            <button class="btn btn-sm btn-outline-primary">⇅정렬</button>
 			                        </div>
 			                    </div>
 
-			                    <!-- 읽고 있는 책 탭팬 -->
-			                    <div class="tab-pane fade" id="nav-additional-information" role="tabpanel" aria-labelledby="nav-additional-information-tab" tabindex="0">
+			                    <!-- 읽고 있는 책 탭 팬 -->
+			                    <div class="tab-pane fade" id="nav-reading" role="tabpanel" aria-labelledby="nav-reading-tab" tabindex="0">
 			                        <div id="reading-list">
 			                            <!-- 책 항목 (서버에서 동적으로 생성될 예정) -->
 			                            <div class="book-item d-flex align-items-start mb-4">
@@ -161,15 +169,14 @@ pageEncoding="UTF-8"%>
 			                                </div>
 			                            </div>
 			                        </div>
-
 			                        <!-- 4번: 정렬 버튼 -->
 			                        <div class="text-end mt-3">
 			                            <button class="btn btn-sm btn-outline-primary">⇅정렬</button>
 			                        </div>
 			                    </div>
 
-			                    <!-- 읽고 싶은 책 탭팬 -->
-			                    <div class="tab-pane fade" id="nav-reviews" role="tabpanel" aria-labelledby="nav-reviews-tab" tabindex="0">
+			                    <!-- 읽고 싶은 책 탭 팬 -->
+			                    <div class="tab-pane fade" id="nav-wishlist" role="tabpanel" aria-labelledby="nav-wishlist-tab" tabindex="0">
 			                        <div id="wish-list">
 			                            <!-- 책 항목 (서버에서 동적으로 생성될 예정) -->
 			                            <div class="book-item d-flex align-items-start mb-4">
@@ -189,13 +196,12 @@ pageEncoding="UTF-8"%>
 			                                </div>
 			                            </div>
 			                        </div>
-
 			                        <!-- 4번: 정렬 버튼 -->
 			                        <div class="text-end mt-3">
 			                            <button class="btn btn-sm btn-outline-primary">⇅정렬</button>
 			                        </div>
 			                    </div>
-			                </div>
+			                </div> <!-- end of tab-content -->
 			            </div>
 			        </div>
 			    </div>
@@ -220,9 +226,7 @@ pageEncoding="UTF-8"%>
                             <a class="stretched-link" href="index.html"></a>
                         </div>
                     <ul class="navbar-nav justify-content-end flex-grow-1 mt-4">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="index.html"><i class="ri-apps-2-line"></i> Home</a>
-                        </li>
+                      
                         
                         <li class="nav-item dropdown osahan-mega-menu position-static">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Elements </a>
@@ -419,7 +423,7 @@ pageEncoding="UTF-8"%>
         </div>
 		
 		<!-- 푸터 포함 -->
-		   <%@ include file="footer.jsp" %>
+		  <%@ include file="footer.jsp" %>
 		
         
         <!-- Bootsrap Bundle Js -->
@@ -434,5 +438,7 @@ pageEncoding="UTF-8"%>
         <script src="../js/slick.js"></script>
         <!-- Custom Js -->
         <script src="../js/script.js"></script>
+		<!--user-myLibrary JS-->
+		<script src="../js/user-myLibrary.js"></script>
     </body>
 </html>
