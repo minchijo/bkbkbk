@@ -10,7 +10,7 @@ public class ChatMessageVO {
 	private String content;
 	private String sender;
 	private LocalDateTime time;
-
+	private String senderId;
 
 	public enum MessageType {
 		CHAT,
