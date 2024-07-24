@@ -1,5 +1,13 @@
 $(function() {
 	
+	
+	     document.getElementById('wish-book-btn').addEventListener('click', function() {
+	         if (confirm("읽고 싶은 책에 저장됐습니다. 나의 서재로 이동하겠습니까?")) {
+	             document.getElementById('wishlistForm').submit();
+	         }
+	     });
+
+	
 	//달력에서 날짜 선택 기능
 	  $("#start-date, #end-date, #start-reading-date").datepicker({
 	           dateFormat: "yy-mm-dd"

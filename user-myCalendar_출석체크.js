@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		events: [
 		    
 		],
-		// 날짜 옵션 클릭 시 이벤트
+		// 날짜 클릭 시 이벤트
         dateClick: function(info) {
 			// prev, next 클릭 시 연도, 월 선택도 업데이트
 			if (info.date <= today) {
@@ -212,60 +212,33 @@ document.addEventListener('DOMContentLoaded', function() {
 	    // 출석체크 및 마킹 함수를 호출합니다.
 	    checkAndMarkAttendance(today);
 	});
-	
-	// *** [1] 페이지 로드 시 실행
+
+	// 페이지가 로드되면 실행될 이벤트 리스너를 추가합니다.
 	document.addEventListener('DOMContentLoaded', function() {
-		// *** [2] 출석 정보를 가져와 달력에 표시
+	    // 출석 정보를 가져와 달력에 표시하는 함수를 호출합니다.
 	    getAttendanceList();
 	});
 	
-	// *** [3] 출석 정보 가져오는 함수 ( getAttendanceList 실행 )
-	// 출석 정보를 가져와서 달력에 표시하는 함수를 정의합니다.
-	function getAttendanceList() {
-	    $.ajax({
-	        url: '/calendar/getAttendance',
-	        type: 'GET',
-	        dataType: 'json',
-	        success: function(data) {
-	            console.log("Received attendance data:", data); // 받은 데이터를 콘솔에 출력합니다.
-	            if (data.attendanceList && Array.isArray(data.attendanceList)) { // 출석 리스트가 존재하고 배열이라면
-	                console.log("getAttendanceList 실행");
-	                data.attendanceList.forEach(function(attendance) {
-	                    var attendanceDate = new Date(attendance.calendarDate); // 출석 날짜를 Date 객체로 변환합니다.
-	                    markAttendance(attendanceDate); // 각 출석 날짜에 대해 출석 표시를 추가합니다.
-	                });
-	            } else {
-	                console.log("No attendance data or invalid format"); // 데이터가 없거나 형식이 잘못되었다면 콘솔에 출력합니다.
-	            }
-	            updateAttendanceButton(); // 출석체크 버튼의 표시 여부를 업데이트합니다.
-	        },
-	        error: function(xhr, status, error) {
-	            console.error('Error:', error); // 오류를 콘솔에 출력합니다.
-	            alert('출석 정보를 가져오는 중 오류가 발생했습니다.'); // 사용자에게 오류 알림을 표시합니다.
-	        }
-	    });
-	}
-
 	// * 출석체크 버튼 클릭 시 실행
 	// 출석체크 및 마킹 함수를 정의합니다.
 	function checkAndMarkAttendance() {
-	    $.ajax({
-	        url: '/calendar/checkAttendance',
-	        type: 'POST',
-	        dataType: 'text',
-	        success: function(result) {
-	            if (result === 'success') { // 출석체크가 성공했다면
-	                getAttendanceList(); // 출석 정보를 새로 가져와서 달력에 표시합니다.
-	                alert('출석체크 되었습니다!'); // 사용자에게 알림을 표시합니다.
-	            } else {
-	                alert('이미 출석체크를 완료하셨습니다.'); // 이미 출석체크를 했다면 알림을 표시합니다.
-	            }
-	            updateAttendanceButton(); // 출석체크 버튼의 표시 여부를 업데이트합니다.
-	        },
-	        error: function(xhr, status, error) {
-	            console.error('Error:', error); // 오류를 콘솔에 출력합니다.
-	            alert('출석체크 중 오류가 발생했습니다.'); // 사용자에게 오류 알림을 표시합니다.
+	    // 서버에 POST 요청을 보냅니다.
+	    fetch('/calendar/checkAttendance', {
+	        method: 'POST'
+	    })
+	    .then(response => response.text()) // 응답을 텍스트로 변환합니다.
+	    .then(result => {
+	        if (result === 'success') { // 출석체크가 성공했다면
+	            getAttendanceList(); // 출석 정보를 새로 가져와서 달력에 표시합니다.
+	            alert('출석체크 되었습니다!'); // 사용자에게 알림을 표시합니다.
+	        } else {
+	            alert('이미 출석체크를 완료하셨습니다.'); // 이미 출석체크를 했다면 알림을 표시합니다.
 	        }
+	        updateAttendanceButton(); // 출석체크 버튼의 표시 여부를 업데이트합니다.
+	    })
+	    .catch(error => {
+	        console.error('Error:', error); // 오류를 콘솔에 출력합니다.
+	        alert('출석체크 중 오류가 발생했습니다.'); // 사용자에게 오류 알림을 표시합니다.
 	    });
 	}
 	
@@ -302,23 +275,15 @@ document.addEventListener('DOMContentLoaded', function() {
 	// 출석체크 여부를 확인하는 함수를 정의합니다.
 	function checkAttendance(date, cell) {
 	    var dateStr = date.toLocaleDateString('en-CA'); // 날짜를 'YYYY-MM-DD' 형식의 문자열로 변환합니다.
-	    
-	    $.ajax({
-	        url: '/calendar/getAttendance',
-	        type: 'GET',
-	        data: { date: dateStr },
-	        dataType: 'json',
-	        success: function(data) {
-	            if (data.attended) { // 출석했다면
-	                console.log("checkAttendance 실행");
-	                markAttendance(date); // 출석 표시를 추가합니다.
-	            }
-	            updateAttendanceButton(); // 출석체크 버튼의 표시 여부를 업데이트합니다.
-	        },
-	        error: function(xhr, status, error) {
-	            console.error('Error:', error);
+	    fetch('/calendar/getAttendance?date=' + dateStr) // 서버에 GET 요청을 보냅니다.
+	    .then(response => response.json()) // 응답을 JSON으로 변환합니다.
+	    .then(data => {
+	        if (data.attended) { // 출석했다면
+	            markAttendance(date); // 출석 표시를 추가합니다.
 	        }
-	    });
+	        updateAttendanceButton(); // 출석체크 버튼의 표시 여부를 업데이트합니다.
+	    })
+	    .catch(error => console.error('Error:', error)); // 오류를 콘솔에 출력합니다.
 	}
 	
 	// * 여러 함수에서 호출, 출석 정보를 가져온 후 실행
@@ -327,36 +292,45 @@ document.addEventListener('DOMContentLoaded', function() {
 	    var today = new Date().toISOString().split('T')[0]; // 오늘 날짜를 'YYYY-MM-DD' 형식으로 가져옵니다.
 	    var attendanceButton = document.getElementById('attendance-check'); // 출석체크 버튼 요소를 가져옵니다.
 
-	    $.ajax({
-	        url: '/calendar/getAttendance',
-	        type: 'GET',
-	        dataType: 'json',
-	        success: function(data) {
-	            console.log("updateAttendanceButton 실행");
-	            var todayAttendance = data.attendanceList.some(function(attendance) {
-	                return attendance.calendarDate.split('T')[0] === today;
-	            }); // 오늘 출석했는지 확인합니다.
-	            attendanceButton.style.display = todayAttendance ? 'none' : 'flex'; // 출석 여부에 따라 버튼을 표시하거나 숨깁니다.
-	        },
-	        error: function(xhr, status, error) {
-	            console.error('Error:', error);
+	    fetch('/calendar/getAttendance') // 서버에 GET 요청을 보냅니다.
+	    .then(response => response.json()) // 응답을 JSON으로 변환합니다.
+	    .then(data => {
+	        var todayAttendance = data.attendanceList.some(attendance =>
+	            attendance.calendarDate.split('T')[0] === today
+	        ); // 오늘 출석했는지 확인합니다.
+	        attendanceButton.style.display = todayAttendance ? 'none' : 'flex'; // 출석 여부에 따라 버튼을 표시하거나 숨깁니다.
+	    })
+	    .catch(error => console.error('Error:', error)); // 오류를 콘솔에 출력합니다.
+	}
+
+	// * 페이지 로드 시와 출석체크 성공 시 실행
+	// 출석 정보를 가져와서 달력에 표시하는 함수를 정의합니다.
+	function getAttendanceList() {
+	    fetch('/calendar/getAttendance') // 서버에 GET 요청을 보냅니다.
+	    .then(response => {
+	        if (!response.ok) {
+	            throw new Error('Network response was not ok'); // 응답이 정상이 아니면 오류를 발생시킵니다.
 	        }
+	        return response.json(); // 응답을 JSON으로 변환합니다.
+	    })
+	    .then(data => {
+	        console.log("Received attendance data:", data); // 받은 데이터를 콘솔에 출력합니다.
+	        if (data.attendanceList && Array.isArray(data.attendanceList)) { // 출석 리스트가 존재하고 배열이라면
+	            data.attendanceList.forEach(attendance => {
+	                const attendanceDate = new Date(attendance.calendarDate); // 출석 날짜를 Date 객체로 변환합니다.
+	                markAttendance(attendanceDate); // 각 출석 날짜에 대해 출석 표시를 추가합니다.
+	            });
+	        } 
+			else {
+	            console.log("No attendance data or invalid format"); // 데이터가 없거나 형식이 잘못되었다면 콘솔에 출력합니다.
+	        }
+	        updateAttendanceButton(); // 출석체크 버튼의 표시 여부를 업데이트합니다.
+	    })
+	    .catch(error => {
+	        console.error('Error:', error); // 오류를 콘솔에 출력합니다.
+	        alert('출석 정보를 가져오는 중 오류가 발생했습니다.'); // 사용자에게 오류 알림을 표시합니다.
 	    });
 	}
 
 	getAttendanceList(); // 출석 정보를 가져와 달력에 표시하는 함수를 호출합니다.
-	
-	
-	/********************* 메모 조회 *****************************/
-	function getMemoList(){
-		
-		$.ajax({
-			url : '/calendar/getMemos',
-			type : 'GET',
-			dataType: 'List',
-			success: function(data){
-				console.log("getMemoList 실행");
-			}
-		}); // end of ajax
-	}
 });
