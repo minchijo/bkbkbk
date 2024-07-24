@@ -1,9 +1,11 @@
 package com.bookbookbook;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -13,22 +15,23 @@ import org.springframework.stereotype.Controller;
 import com.bookbookbook.domain.ChatMessageVO;
 import com.bookbookbook.domain.ChatMessageVO.MessageType;
 import com.bookbookbook.service.ChatMessageCSVService;
-
+import com.bookbookbook.service.MainService;
 
 @Controller
 public class WebSocketController {
 	@Autowired
     private ChatMessageCSVService chatMessageCSVService;
+	@Autowired
+	private MainService mainService;
 	
+	
+	private Set<String> activeUsers = new HashSet<>(); // 유저 목록 저장을 위한 Set
     private final SimpMessageSendingOperations messagingTemplate;
-	//private final ChatRoomService chatRoomService;
 
     public WebSocketController(SimpMessageSendingOperations messagingTemplate) {
         this.messagingTemplate = messagingTemplate;
-        //this.chatRoomService = chatRoomService;
     }
 
-    
     @MessageMapping("/chat.register")
     @SendTo("/topic/public")
     public ChatMessageVO register(@Payload ChatMessageVO message) {
@@ -37,25 +40,48 @@ public class WebSocketController {
         return message;
     }
     
-    @MessageMapping("/chat.sendMessage")
-    public void sendMessage(@Payload ChatMessageVO chatMessage) {
+    @MessageMapping("/chat.sendMessage/{roomNum}")
+    public void sendMessage(@Payload ChatMessageVO chatMessage ,@DestinationVariable String roomNum) {
         chatMessage.setTime(LocalDateTime.now());
         chatMessageCSVService.saveChatMessage(chatMessage);
-        messagingTemplate.convertAndSend("/topic/public", chatMessage);
+        messagingTemplate.convertAndSend("/topic/public/"+ roomNum, chatMessage);
     }
 
-    @MessageMapping("/chat.addUser")
-    public void addUser(@Payload ChatMessageVO chatMessage) {
-        chatMessage.setType(MessageType.JOIN);
+    @MessageMapping("/chat.addUser/{roomNum}")
+    public void addUser(@Payload ChatMessageVO chatMessage,@DestinationVariable String roomNum) {
+    	String info = roomNum+"/"+chatMessage.getSender(); // 유저 이름을 가져옴
+        activeUsers.add(info); // 유저를 목록에 추가
+    	chatMessage.setType(MessageType.JOIN);
         chatMessage.setTime(LocalDateTime.now());
-        messagingTemplate.convertAndSend("/topic/public", chatMessage);
+        messagingTemplate.convertAndSend("/topic/public/"+ roomNum, chatMessage);     
+        sendActiveUsers(roomNum); // 업데이트된 유저 목록 전송
     }
     
-    @MessageMapping("/chat.removeUser")
-    public void removeUser(@Payload ChatMessageVO chatMessage) {
-        chatMessage.setType(MessageType.LEAVE);
+    @MessageMapping("/chat.removeUser/{roomNum}")
+    public void removeUser(@Payload ChatMessageVO chatMessage,@DestinationVariable String roomNum) {
+    	String info = roomNum+"/"+chatMessage.getSender(); // 유저 이름을 가져옴
+        activeUsers.remove(info); // 유저를 목록에서 제거
+    	chatMessage.setType(MessageType.LEAVE);
         chatMessage.setTime(LocalDateTime.now());
-        messagingTemplate.convertAndSend("/topic/public", chatMessage);
+        messagingTemplate.convertAndSend("/topic/public/"+roomNum, chatMessage);
+        sendActiveUsers(roomNum); // 업데이트된 유저 목록 전송
+        System.out.println(roomNum+activeUsers.toString());
+        int result=0;
+        //채팅방 참여 유저가 없는 경우 채팅방 삭제
+        if(activeUsers.size() <1) {
+        	mainService.deleteChatroom(roomNum);
+        }
+        for(String user : activeUsers) {
+        	result += Integer.parseInt(user.split("/")[0]);
+        	if( result == 0) {
+        		//채팅방 삭제
+        		mainService.deleteChatroom(roomNum);
+        	}
+        }
+    }
+    // 유저 목록을 클라이언트에 전송하는 메소드
+    private void sendActiveUsers(String roomNum) {
+        messagingTemplate.convertAndSend("/topic/activeUsers/" + roomNum, activeUsers);
     }
     
 }
