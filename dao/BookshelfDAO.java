@@ -17,9 +17,9 @@ public interface BookshelfDAO {
 	 //나의 서재 읽은 책 탭팬
 	  List<BookshelfVO> getReadBooksDetails();
 	  
-	  //
+	  //읽고 있는 책
 	  List<BookshelfVO> getReadingBooksDetails();
 	  
-	  //
+	  //읽고 싶은 책
 	  List<BookshelfVO> getWishlistBooks();
 }
