@@ -6,9 +6,8 @@ import lombok.Data;
 public class MemoVO {
 
    private Integer memoNum;
-   private Integer bookNum;
+   private Integer shelfNum;
    private Integer userNum;
-   private Integer cateNum;
    private String memoContent;
    private String memoDate;
 }
