@@ -4,8 +4,9 @@ import lombok.Data;
 
 @Data
 public class CalendarVO {
-   private Integer calendarNum;
-   private Integer userNum;
-   private String attendance;
-   private String attendanceDate;
+   private Integer 	calendarNum;
+   private Integer 	userNum;
+   private boolean	attendance;
+   private String 	calendarDate;
+   
 }
