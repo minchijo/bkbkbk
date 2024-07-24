@@ -1,29 +1,30 @@
 package com.bookbookbook.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bookbookbook.domain.CalendarVO;
+import com.bookbookbook.domain.MemoVO;
 import com.bookbookbook.domain.ReportVO;
 import com.bookbookbook.domain.UserVO;
 import com.bookbookbook.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @Controller
 public class UserController {
 	// 로거 설정
@@ -44,15 +45,15 @@ public class UserController {
 	    // UserService를 통해 사용자 등록 처리
 	    userService.registerUser(userVO);
 	    // 회원가입 성공 후 성공 페이지로 리다이렉트
-	    return "redirect:/pages/user-signUpSuccess";
+	    return "redirect:/pages/user-login";
 	}
 
-	// 회원가입 성공 페이지 요청을 처리하는 메서드
-	@GetMapping("/pages/page-signup-success")
-	public String signUpSuccess() {
-	    // 회원가입 성공 JSP 페이지 반환
-	    return "pages/user-signUpSuccess";
-	}
+	/*
+	 * // 회원가입 성공 페이지 요청을 처리하는 메서드
+	 * 
+	 * @GetMapping("/pages/page-signup-success") public String signUpSuccess() { //
+	 * 회원가입 성공 JSP 페이지 반환 return "pages/user-login"; }
+	 */
 
 	// 로그인 요청을 처리하는 메서드
 	@PostMapping("/pages/login")
@@ -186,15 +187,80 @@ public class UserController {
 	}
 	
 	//#######################################
-		//나의 달력
+	//나의 달력
+		// 페이지 연결
+	/*
 	@GetMapping("/pages/user-myCalendar")
 	public String myCalendar() {
 		System.out.println("user-myCalendar 호출");
 		return "pages/user-myCalendar";
 	}
+	*/
+	@GetMapping("/pages/user-myCalendar")
+	public String myCalendar(HttpSession session, Model m) {
+		System.out.println("user-myCalendar 호출");
+		
+		/*
+		 * String userId = (String) session.getAttribute("userId");
+		 * 
+		 * List<HashMap<String, Object>> memoList =
+		 * userService.getMemosAtCalendar(userId);
+		 * 
+		 * System.out.println("userController getMemosAtCalendar memoList : " +
+		 * memoList);
+		 */
+		
+		// m.addAttribute("memoList", memoList);
+		
+		return "pages/user-myCalendar";
+	}
 	
+		// 출석체크 데이터베이스에 저장
+	@PostMapping("/calendar/checkAttendance")
+    public ResponseEntity<?> checkAttendance(HttpSession session) {
+        String userId = (String) session.getAttribute("userId");
+        System.out.println("userController checkAttendance 호출");
+        
+        boolean result = userService.markAttendance(userId);
+        System.out.println("UserController 출석체크 데이터베이스 저장 result값 : " + result);
+        
+        if (result) {
+            return ResponseEntity.ok("success");
+        } 
+        else {
+            return ResponseEntity.ok("alreadyChecked");
+        }
+    }
+		// 데이터베이스에서 출석 정보 조회
+	@GetMapping("/calendar/getAttendance")
+	public ResponseEntity<?> getAttendance(HttpSession session) {
+		System.out.println("userController getAttendance 호출");
+		
+	    String userId = (String) session.getAttribute("userId");
+	    
+	    List<CalendarVO> attendanceList = userService.getAttendanceList(userId);
+	    
+	    System.out.println("userController getAttendance attendanceList : " + attendanceList);
+	    
+	    return ResponseEntity.ok().body(Map.of("attendanceList", attendanceList));
+	}
+
+		// 데이터베이스에서 작성한 메모 조회
+	@GetMapping("/calendar/getMemos")
+	public List<HashMap<String, Object>> getMemosAtCalendar(HttpSession session, Model m) {
+		System.out.println("userController getMemosAtCalendar 호출");
+		
+		String userId = (String) session.getAttribute("userId");
+		
+		List<HashMap<String, Object>> memoList = userService.getMemosAtCalendar(userId);
+		
+		System.out.println("userController getMemosAtCalendar memoList : " + memoList);
+		
+		return memoList;
+	} 
+		
 	//#######################################
-		//나의 메모
+	//나의 메모
 	@GetMapping("/pages/user-myMemo")
 	public String myMemo() {
 		System.out.println("user-myMemo 호출");
@@ -205,6 +271,69 @@ public class UserController {
 		System.out.println("user-myMemoDetail 호출");
 		return "pages/user-myMemoDetail";
 	}
+
+	//#######################################
+	// 나의 캐릭터
+		// myCharacters 페이지
+	@GetMapping("/pages/user-myCharacters")
+	public String myCharacters(HttpSession session, Model m) {
+		System.out.println("user-myCharacters 호출");
+		// 세션의 userId 값 
+	    String userId = (String)session.getAttribute("userId");
+
+	    // 로그인을 한 경우
+	    if (userId != null) {
+	    	System.out.println("로그인 성공");
+	    	// userId로 userLevel에 따른 캐릭터 정보 조회
+	    		// UserVO, CharactersVO가 있는 HashMap
+	        List<HashMap<String, Object>> result = userService.getCharactersByUserId(userId);
+	        System.out.println("HashMap : " + result);
+	        // 조회한 정보가 있는 경우
+	        if (!result.isEmpty()) {
+	        	System.out.println("캐릭터 정보 조회 성공");
+	        	Integer userLevel = (Integer) result.get(0).get("userLevel");
+	        	
+	        	System.out.println("myCharacters 컨트롤러 사용자 레벨 : " + userLevel);
+	            System.out.println("myCharacters 컨트롤러 사용자 캐릭터 : " + result);
+	            
+	            m.addAttribute("userLevel", userLevel);
+	            m.addAttribute("characters", result);
+	        }
+	    }
+		return "pages/user-myCharacters";
+	}
+	
+		// myCharactersDetail 페이지
+	@GetMapping("/pages/user-myCharactersDetail")
+	public String myCharactersDetail(@RequestParam("stage") Integer stage, Model m, HttpSession session) {
+		System.out.println("user-myCharactersDetail 호출, stage : " + stage);
+		
+		// userLevel 얻어오기 위해 userId 변수 생성
+		String userId = (String) session.getAttribute("userId");
+		
+		// userId, stage를 hashMap으로 한번에
+		Map<String, Object> params = new HashMap<>();
+	    params.put("stage", stage);
+	    params.put("userId", userId);
+	    
+	    // userLevel과 캐릭터 정보 조회
+	    Map<String, Object> result = userService.myCharactersDetail(params);
+	    
+	    // 사용자 레벨 체크
+	    Integer userLevel = (Integer) result.get("userLevel");
+	    
+	    // 요청한 단계가 사용자의 레벨을 초과하는 경우 에러 페이지로 리다이렉트
+	    if (stage > userLevel) {
+	        return "redirect:/error";
+	    }
+
+	    System.out.println("user-myCharactersDetail 반환값 : " + result);
+
+	    m.addAttribute("character", result);
+
+		return "pages/user-myCharactersDetail";
+	}
+
 
 }
 
