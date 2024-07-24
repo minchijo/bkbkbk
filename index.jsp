@@ -20,6 +20,22 @@
     <!-- Custom Css -->
     <link rel="stylesheet" href="css/style.css">
     <style>
+		#moving-text {
+	        position: relative;
+	        transition: left 0.2s ease-out; /* 좌우로 움직이는 애니메이션 설정 */
+	    }
+			
+		#moving-text h1{
+			font-size: 250%;
+		}
+		
+		#home{
+			background-image: url('../img/index_cover.png');
+			    background-size: cover; /* 화면에 꽉 차도록 배경 이미지 크기 조절 */
+			    background-position: center; /* 배경 이미지 중앙 정렬 */
+			    background-attachment: fixed; /* 스크롤에 따라 배경 이미지 고정 */
+			    padding: 100px 0; /* 내용과 화면 맨 위 간격 조절 */
+		}
 		
         body, html {
             margin: 0;
@@ -51,34 +67,67 @@
             margin-top: 50px;
 			margin-left: -40px;
         }
-        .shape {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            background-size: cover;
-            background-position: center;
-            text-align: center;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .shape-1 {
-            background-image: url('../img/circle.png'); /* 이미지 경로를 정확히 입력하세요 */
-        }
-        .shape-2 {
-            background-image: url('../img/pentagon.png'); /* 이미지 경로를 정확히 입력하세요 */
-        }
-        .shape-3 {
-            background-image: url('../img/triangle.png'); /* 이미지 경로를 정확히 입력하세요 */
-        }
+		.shape {
+		    position: relative;
+		    width: 150px;
+		    height: 150px;
+		    background-size: cover;
+		    background-position: center;
+		    text-align: center;
+		    color: white;
+		    font-size: 20px;
+		    font-weight: bold;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    /* Ensure text is vertically centered */
+		    line-height: 150px; /* Adjust based on the size of the shape */
+		}
+
+		.shape span {
+		    display: inline-block;
+		    transform: rotate(0deg);
+		    line-height: initial; /* Reset line-height */
+		}
+
+		.shape-1 {
+		    background-image: url('../img/circle.png');
+		    display: inline-block;
+		    transition: transform 10s ease;
+		    animation: rotateSlowly 59s linear infinite;
+		}
+
+		.shape-2 {
+		    background-image: url('../img/pentagon.png');
+		    display: inline-block;
+		    transition: transform 11s ease;
+		    animation: rotateSlowly 60s linear infinite reverse;
+		}
+
+		.shape-3 {
+		    background-image: url('../img/triangle.png');
+		    display: inline-block;
+		    transition: transform 9s ease;
+		    animation: rotateSlowly 61s linear infinite;
+		}
+		@keyframes rotateSlowly {
+		  0% {
+		    transform: rotate(0deg);
+		  }
+		  100% {
+		    transform: rotate(360deg);
+		  }
+		 }
+		 
+		 .bg-corgi-cover{
+			background-image: url('../img/index_cover.png');
+		 }
+		  
 		.full-width-background {
 		           width: 100vw;
 		         
 		       }
-		#recommendationBooksSection{
+		#popularBooksSection{
 			background-color: #fff5f2;
 			margin-top: 150px;
 			padding: 50px;
@@ -162,65 +211,7 @@
 	    <!-- navbar -->
 	    <div class="elements-nav">
 	        <!-- bootom nav -->
-	        <nav id="header" class="navbar navbar-expand bottom-nav bg-black borer-bottom border-opacity-10 border-white py-lg-0 py-3 bg-opacity-25">
-	                    <div class="container">
-	                        <div class="position-relative d-flex align-items-center gap-2 site-brand">
-	                            <img src="../img/bookbookbookLogo.png" alt="북북북 로고">
-								<div class="lh-1">
-								      <h5 class="fw-bold m-0">BOOKBOOKBOOK</h5>
-								            <!-- <small class="text-muted text-white-50">One Page</small> -->
-								 </div>
-								<a class="stretched-link" href="${pageContext.request.contextPath}/main"></a>
-									           </div>
-									           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-									               <span class="navbar-toggler-icon"></span>
-									           </button>
-									           <div class="collapse navbar-collapse justify-content-between" id="navbarContent">
-									               <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-													
-													
-									                   <li class="nav-item dropdown">
-									                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">나의 서재</a>
-									                       <ul class="dropdown-menu">
-									                           <li><a class="dropdown-item" href="shop-product-grid.html">읽은 책</a></li>
-									                           <li><a class="dropdown-item" href="shop-product-list.html">읽고 있는 책</a></li>
-									                           <li><a class="dropdown-item" href="shop-product-full-three-coulmn.html">읽고 싶은 책</a></li>
-									                       </ul>
-									                   </li>
-									                   <li class="nav-item">
-									                       <a class="nav-link" href="#" role="button">나의 캐릭터</a>
-									                   </li>
-									                   <li class="nav-item dropdown">
-									                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">나의 정보</a>
-									                       <ul class="dropdown-menu">
-									                           <li><a class="dropdown-item" href="shop-product-grid.html">나의 정보</a></li>
-									                           <li><a class="dropdown-item" href="shop-product-list.html">나의 달력</a></li>
-									                           <li><a class="dropdown-item" href="shop-product-full-three-coulmn.html">나의 메모</a></li>
-									                           <li><a class="dropdown-item" href="shop-product-full-four-coulmn.html">나의 통계</a></li>
-									                       </ul>
-									                   </li>
-									               </ul>
-												   <form class="d-flex justify-content-center">
-												                             <div class="input-group border border-2 border-dark rounded-pill overflow-hidden bg-white p-1" style="max-width: 600px;">
-												                                 <input type="text" class="form-control border-0 py-3 px-4" placeholder="궁금한 책을 검색해 보세요!" aria-label="Enter your email" aria-describedby="app">
-												                                 <button class="btn btn-primary fw-semibold rounded-pill py-3 px-5" type="button" id="app">검색하기</button>
-												                             </div>
-												                         </form>
-									               <div class="d-flex align-items-center">
-									                   <c:choose>
-									                       <c:when test="${not empty sessionScope.userId}">
-									                           <span class="me-3 text-white">${sessionScope.userName}님 환영합니다!</span>
-									                           <a href="${pageContext.request.contextPath}/logout" class="btn btn-purple rounded-pill btn-theme">로그아웃</a>
-									                       </c:when>
-									                       <c:otherwise>
-									                           <a href="${pageContext.request.contextPath}/pages/login" class="btn btn-purple rounded-pill btn-theme">로그인</a>
-									                       </c:otherwise>
-									                   </c:choose>
-									               </div>
-									           </div>
-									       </div>
-									   </nav>
-
+			<%@ include file="header.jsp" %>
     <!-- hero-header -->
     <div id="home" class="bg-white">
         <div class="container py-5">
@@ -228,23 +219,28 @@
                 <div class="col-lg-12 col-12 text-center" data-aos="fade-right" data-aos-duration="1000">
                     <div class="mb-5">
                         <div class="display-3 pb-4 text-muted">
-                            북북북
+							<div id="moving-text">
+								<h1>
+								<p >B<img src="img/7.png"/>OK BOOK BOOK</p>
+								</h1>
+							</div>
                             <br>
                             <span class="gradient-text fw-bold"> 혼자 그리고 함께 읽는 공간</span>
                         </div>
-                      <!--  <form class="d-flex justify-content-center">
-                            <div class="input-group border border-2 border-dark rounded-pill overflow-hidden bg-white p-1" style="max-width: 600px;">
-                                <input type="text" class="form-control border-0 py-3 px-4" placeholder="궁금한 책을 입력해 주세요" aria-label="Enter your email" aria-describedby="app">
-                                <button class="btn btn-primary fw-semibold rounded-pill py-3 px-5" type="button" id="app">검색하기</button>
-                            </div>
-                        </form>-->
                     </div>
                 </div>
 				<div class="background-shapes mb-5">
-				    <a href="/pages/book-categorySearch" class="shape shape-1 col-mb-4">맞춤도서</a>
-				    <a href="/pages/user-myLeague" class="shape shape-2 col-mb-4">리그</a>
-				    <a href="/pages/chat-entrance" class="shape shape-3 col-mb-4">오픈책팅</a>
+				    <div class="shape shape-1 col-mb-4">
+				        <a href="/pages/book-categorySearch"><span>카테고리별 도서</span></a>
+				    </div>
+				    <div class="shape shape-2 col-mb-4">
+				        <a href="/pages/user-myLeague"><span>리그</span></a>
+				    </div>
+				    <div class="shape shape-3 col-mb-4">
+				        <a href="/pages/chat-entrance"><span>오픈책팅</span></a>
+				    </div>
 				</div>
+
 				
 
 				<div class="full-width-background">
@@ -255,48 +251,41 @@
 					            <h5>${sessionScope.userName}님이 좋아하실 만한 도서입니다.</h5>
 					        </c:when>
 					        <c:otherwise>
-					            <h5>인기 도서 추천</h5>
+					           
 					        </c:otherwise>
 					    </c:choose>
 					</div>
 
 				        <div class="row justify-content-center">
-				            <div class="book-card">
-				                <img src="https://via.placeholder.com/300x450" class="book-img" alt="Book 1">
-				                <div class="text-center">
-				                    <p>소설</p>
-				                    <h5>당신이 누군가를 죽였다</h5>
-				                    <p>히가시노 게이고 · 북다</p>
-				                </div>
-				            </div>
+				            
 
-				            <div class="book-card">
-				                <img src="https://via.placeholder.com/300x450" class="book-img" alt="Book 2">
-				                <div class="text-center">
-				                    <p>경제/경영</p>
-				                    <h5>덕후가 브랜드에게</h5>
-				                    <p>편은지 · 두레빗</p>
-				                </div>
-				            </div>
+				            
 
-				            <div class="book-card">
-				                <img src="https://via.placeholder.com/300x450" class="book-img" alt="Book 3">
-				                <div class="text-center">
-				                    <p>역사/문화</p>
-				                    <h5>세계를 움직인 열 가지 프레임</h5>
-				                    <p>수바드라 다스 · 북하우스</p>
-				                </div>
-				            </div>
-				            <div class="book-card">
-				                <img src="https://via.placeholder.com/300x450" class="book-img" alt="Book 4">
-				                <div class="text-center">
-				                    <p>청소년</p>
-				                    <h5>죽이고 싶은 아이 2</h5>
-				                    <p>이꽃님 · 우리학교</p>
-				                </div>
-				            </div>
+				         
+				         
 				        </div>
 				    </div>
+				   </div>
+				   
+					<!--인기 대출 도서-->
+				   <div class="full-width-background">
+				       <div class="container mt-5" id="popularBooksSection" style="width: 100%;">
+				           <div class="text-center mb-4">
+				               <h5>인기 대출 도서</h5>
+				           </div>
+				           <div class="row justify-content-center">
+				               <c:forEach items="${popularBooks}" var="book" begin="0" end="3">
+				                   <div class="book-card">
+				                       <img src="${book.bestfname}" class="book-img" alt="${book.bestTitle}">
+				                       <div class="text-center">
+				                           <p>${book.cateNum}</p>
+				                           <h5>${book.bestTitle}</h5>
+				                           <p>${book.bestWriter} · ${book.bestPublisher}</p>
+				                       </div>
+				                   </div>
+				               </c:forEach>
+				           </div>
+				       </div>
 				   </div>
 	
 	            <!-- News Section -->
@@ -359,6 +348,31 @@
             chatbotId: "CLzwRLQ2gS5uqCukGQfdB",
             domain: "www.chatbase.co"
         }
+		
+		document.addEventListener('mousemove', function(e) {
+				        // 마우스 커서의 x 좌표를 가져오기
+				        let mouseX = e.pageX;
+				        
+				        // 텍스트 요소 가져오기
+				        let textElement = document.getElementById('moving-text');
+				        
+				        // 텍스트 요소의 가로 폭 가져오기
+				        let textWidth = textElement.offsetWidth;
+				        
+				        // 페이지 가로 폭 가져오기
+				        let pageWidth = window.innerWidth;
+				        
+				        // 텍스트가 움직일 수 있는 최대 범위 계산
+				        let maxMove = pageWidth - textWidth;
+				        
+				        // 텍스트를 움직일 위치 계산
+				        // mouseX 값이 0일 때는 왼쪽 끝, pageWidth 값일 때는 오른쪽 끝
+				        let textLeft = (mouseX / pageWidth * maxMove);
+				        
+				        // 텍스트 위치 설정
+				        textElement.style.left = 0+textLeft + 'px';
+				    });
+					
     </script>
     <script src="https://www.chatbase.co/embed.min.js" chatbotId="CLzwRLQ2gS5uqCukGQfdB" domain="www.chatbase.co" defer></script>
 </body>

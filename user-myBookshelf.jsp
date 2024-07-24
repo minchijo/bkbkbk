@@ -45,7 +45,7 @@ pageEncoding="UTF-8"%>
 		<!-- Custom Js -->
 		<script src="../js/script.js"></script>
 		<!--user-myLibrary JS-->
-<!--		<script src="../js/user-myBookshelf.js"></script>-->
+		<script src="../js/user-myBookshelf.js"></script>
 	
     </head>
     <body>
@@ -55,41 +55,7 @@ pageEncoding="UTF-8"%>
 		    <!-- navbar -->
 		    <div class="elements-nav">
 		        <!-- bootom nav -->
-		        <nav id="header" class="navbar navbar-expand bottom-nav bg-black borer-bottom border-opacity-10 border-white py-lg-0 py-3 bg-opacity-25">
-		            <div class="container">
-		                <div class="position-relative d-flex align-items-center gap-2 site-brand">
-		                    <img src="../img/bookbookbookLogo.png" alt="북북북 로고">
-		                    <div class="lh-1">
-		                        <h5 class="fw-bold m-0">BOOKBOOKBOOK</h5>
-		                    </div>
-		                    <a class="stretched-link" href="/"></a>
-		                </div>
-		                <div class="collapse navbar-collapse">
-		                    <ul class="navbar-nav m-auto gap-4 m-none">
-		                        <li class="nav-item dropdown single-dropdown-nav">
-		                            <a class="nav-link " href="#" role="button" aria-expanded="false"> 나의 서재 </a>
-		                        </li>
-		                        <li>
-		                            <a class="nav-link" href="#" role="button" aria-expanded="false"> 나의 캐릭터 </a>
-		                        </li>
-		                        <li class="nav-item dropdown single-dropdown-nav">
-		                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 나의 정보 </a>
-		                            <ul class="dropdown-menu">
-		                                <li><a class="dropdown-item" href="shop-product-grid.html">나의 정보</a></li>
-		                                <li><a class="dropdown-item" href="shop-product-list.html">나의 달력</a></li>
-		                                <li><a class="dropdown-item" href="shop-product-full-three-coulmn.html">나의 메모</a></li>
-		                                <li><a class="dropdown-item" href="shop-product-full-four-coulmn.html">나의 통계</a></li>
-		                            </ul>
-		                        </li>
-		                    </ul>
-		                    <a href="./page-login.html" class="btn btn-purple rounded-pill d-none d-lg-block btn-theme"> 로그인 </a>
-		                    <a href="#" class="link-light d-lg-none ms-auto" data-bs-toggle="offcanvas" data-bs-target="#sidebarnav" aria-controls="sidebarnav">
-		                        <i class="ri-menu-3-line ri-lg"></i>
-		                    </a>
-		                </div>
-		            </div>
-		        </nav>
-		    </div>
+				<%@ include file="../header.jsp" %>
 			
             <!-- header -->
             
@@ -120,7 +86,15 @@ pageEncoding="UTF-8"%>
 			                                            <img src="${characterStages[0].characterImage}" alt="Character Image" class="character-image">
 			                                            <div class="book-spines">
 			                                                <c:forEach var="book" items="${characterStages}">
-			                                                    <div class="book-spine">${book.bookTitle}</div>
+			                                                    <div class="book-spine">																<c:choose>
+																                                    <c:when test="${fn:length(book.bookTitle) > 14}">
+																                                        ${fn:substring(book.bookTitle, 0, 14)}...
+																                                    </c:when>
+																                                    <c:otherwise>
+																                                        ${book.bookTitle}
+																                                    </c:otherwise>
+																                                </c:choose>
+																							</div>
 			                                                </c:forEach>
 			                                            </div>
 			                                        </div>
@@ -140,122 +114,164 @@ pageEncoding="UTF-8"%>
 			                        </div>
 
 			                        <!-- 읽은 책 탭 팬 -->
-			                        <div class="tab-pane fade" id="nav-read" role="tabpanel" aria-labelledby="nav-read-tab">
-			                            <div id="read-list">
-			                                <c:choose>
-			                                    <c:when test="${not empty readBooks}">
-			                                        <c:forEach var="book" items="${readBooks}">
-			                                            <div class="book-item d-flex align-items-start mb-4">
-			                                                <img src="${book.bfrealname}" alt="책 표지" class="book-cover me-3" style="width: 100px; height: 150px;">
-			                                                <div class="book-info flex-grow-1">
-			                                                    <div class="d-flex justify-content-between align-items-start">
-			                                                        <div>
-			                                                            <h5 class="book-title">${book.bookTitle}</h5>
-			                                                            <p class="book-author mb-1">${book.writer}</p>
-																		<div class="book-rating mb-1">
-																		    <c:forEach var="i" begin="1" end="5">
-																		        <c:choose>
-																		            <c:when test="${i <= book.rating}">
-																		                <span class="star">★</span>
-																		            </c:when>
-																		            <c:otherwise>
-																		                <span class="star-empty">☆</span>
-																		            </c:otherwise>
-																		        </c:choose>
-																		    </c:forEach>
-																		</div>
+									<div class="tab-pane fade" id="nav-read" role="tabpanel" aria-labelledby="nav-read-tab">
+									    <div class="text-end mt-3">
+									        <div class="btn-group" role="group">
+									            <input type="radio" class="btn-check" name="sort-read" id="startDateRead" autocomplete="off" checked>
+									            <label class="btn btn-outline-secondary btn-sm" for="startDateRead">시작일순</label>
+									            <input type="radio" class="btn-check" name="sort-read" id="endDateRead" autocomplete="off">
+									            <label class="btn btn-outline-secondary btn-sm" for="endDateRead">종료일순</label>
+									            <input type="radio" class="btn-check" name="sort-read" id="highRatingRead" autocomplete="off">
+									            <label class="btn btn-outline-secondary btn-sm" for="highRatingRead">평점높은순</label>
+									        </div>
+									    </div>
+									    <div id="read-list">
+									        <c:choose>
+									            <c:when test="${not empty readBooks}">
+									                <c:forEach var="book" items="${readBooks}">
+									                    <div class="book-item d-flex align-items-start mb-4">
+									                        <img src="${book.bname}" alt="책 표지" class="book-cover" style="width: 100px; height: 150px;">
+									                        <div class="book-info flex-grow-1">
+									                            <div class="d-flex justify-content-between align-items-start">
+									                                <div>
+									                                    <h5 class="book-title">${book.bookTitle}</h5>
+									                                    <p class="book-author mb-1">${book.writer}</p>
+									                                    <div class="book-rating mb-1">
+									                                        <c:forEach var="i" begin="1" end="5">
+									                                            <c:choose>
+									                                                <c:when test="${i <= book.rating}">
+									                                                    <span class="star">★</span>
+									                                                </c:when>
+									                                                <c:otherwise>
+									                                                    <span class="star-empty">☆</span>
+									                                                </c:otherwise>
+									                                            </c:choose>
+									                                        </c:forEach>
+									                                    </div>
+									                                    <p class="book-dates">시작일 <span class="start-date">${book.startDate}</span> 종료일 <span class="end-date">${book.endDate}</span></p>
+									                                </div>
+									                                <button class="btn btn-sm">
+									                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+									                                        <path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,128v80a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h80a8,8,0,0,1,0,16H48V208H208V128a8,8,0,0,1,16,0Z">
+									                                        </path>
+									                                    </svg>
+									                                </button>
+									                            </div>
+									                        </div>
+									                    </div>
+									                </c:forEach>
+									            </c:when>
+									            <c:otherwise>
+									                <div id="without-data">
+									                    <p>읽은 책이 없습니다!</p>
+									                    <div class="d-flex justify-content-center">
+									                        <a href="#" class="btn btn-primary mx-2">베스트셀러 구경하러 가기</a>
+									                        <a href="#" class="btn btn-secondary mx-2">추천 받기</a>
+									                        <a href="#" class="btn btn-success mx-2">읽은 책 등록하기</a>
+									                    </div>
+									                </div>
+									            </c:otherwise>
+									        </c:choose>
+									    </div>
+									</div>
 
-			                                                            <p class="book-dates">시작일 ${book.startDate} 종료일 ${book.endDate}</p>
-			                                                        </div>
-			                                                        <button class="btn btn-sm">
-			                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
-			                                                                <path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,128v80a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h80a8,8,0,0,1,0,16H48V208H208V128a8,8,0,0,1,16,0Z">
-			                                                                </path>
-			                                                            </svg>
-			                                                        </button>
-			                                                    </div>
-			                                                </div>
-			                                            </div>
-			                                        </c:forEach>
-			                                    </c:when>
-			                                    <c:otherwise>
-			                                        <div id="without-data">
-			                                            <p>읽은 책이 없습니다!</p>
-			                                            <div class="d-flex justify-content-center">
-			                                                <a href="#" class="btn btn-primary mx-2">베스트셀러 구경하러 가기</a>
-			                                                <a href="#" class="btn btn-secondary mx-2">추천 받기</a>
-			                                                <a href="#" class="btn btn-success mx-2">읽은 책 등록하기</a>
-			                                            </div>
-			                                        </div>
-			                                    </c:otherwise>
-			                                </c:choose>
-			                            </div>
-			                            <div class="text-end mt-3">
-			                                <button class="btn btn-sm btn-outline-primary">⇅정렬</button>
-			                            </div>
-			                        </div>
+									<!-- 읽고 있는 책 탭 팬 -->
+									<div class="tab-pane fade" id="nav-reading" role="tabpanel" aria-labelledby="nav-reading-tab" tabindex="0">
+									    <div class="text-end mt-3">
+									        <div class="btn-group" role="group">
+									            <input type="radio" class="btn-check" name="sort-reading" id="startDateReading" autocomplete="off" checked>
+									            <label class="btn btn-outline-secondary btn-sm" for="startDateReading">시작일순</label>
+									            <input type="radio" class="btn-check" name="sort-reading" id="readCountReading" autocomplete="off">
+									            <label class="btn btn-outline-secondary btn-sm" for="readCountReading">많이 읽은 순</label>
+									        </div>
+									    </div>
+									    <div id="reading-list">
+									        <c:choose>
+									            <c:when test="${not empty readingBooks}">
+									                <c:forEach var="book" items="${readingBooks}">
+									                    <div class="book-item d-flex align-items-start mb-4">
+									                        <img src="${book.bname}" alt="책 표지" class="book-cover me-3" style="width: 100px; height: 150px;">
+									                        <div class="book-info flex-grow-1">
+									                            <div class="d-flex justify-content-between align-items-start">
+									                                <div>
+									                                    <h5 class="book-title">${book.bookTitle}</h5>
+									                                    <p class="book-author mb-1">${book.writer}</p>
+									                                    <p class="book-start-date mb-1">시작일 <span class="start-date">${book.startDate}</span></p>
+									                                </div>
+									                                <button class="btn btn-sm">
+									                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+									                                        <path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,128v80a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h80a8,8,0,0,1,0,16H48V208H208V128a8,8,0,0,1,16,0Z"></path>
+									                                    </svg>
+									                                </button>
+									                            </div>
+									                            <div class="progress mb-2" style="height: 10px;">
+									                                <div class="progress-bar bg-success" role="progressbar" style="width: 64%" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100"></div>
+									                            </div>
+									                            <p class="book-progress mb-0">64% (473/679 페이지)</p>
+									                        </div>
+									                    </div>
+									                </c:forEach>
+									            </c:when>
+									            <c:otherwise>
+									                <div id="without-data">
+									                    <p>읽고 있는 책이 없습니다!</p>
+									                    <div class="d-flex justify-content-center">
+									                        <a href="#" class="btn btn-primary mx-2">베스트셀러 구경하러 가기</a>
+									                        <a href="#" class="btn btn-secondary mx-2">추천 받기</a>
+									                        <a href="#" class="btn btn-success mx-2">읽은 책 등록하기</a>
+									                    </div>
+									                </div>
+									            </c:otherwise>
+									        </c:choose>
+									    </div>
+									</div>
 
-			                        <!-- 읽고 있는 책 탭 팬 -->
-			                        <div class="tab-pane fade" id="nav-reading" role="tabpanel" aria-labelledby="nav-reading-tab" tabindex="0">
-			                            <div id="reading-list">
-			                                <c:forEach var="book" items="${readingBooks}">
-			                                    <div class="book-item d-flex align-items-start mb-4">
-			                                        <img src="${book.bfrealname}" alt="책 표지" class="book-cover me-3" style="width: 100px; height: 150px;">
-			                                        <div class="book-info flex-grow-1">
-			                                            <div class="d-flex justify-content-between align-items-start">
-			                                                <div>
-			                                                    <h5 class="book-title">${book.bookTitle}</h5>
-			                                                    <p class="book-author mb-1">${book.writer}</p>
-			                                                    <p class="book-start-date mb-1">시작일 ${book.startDate}</p>
-			                                                </div>
-			                                                <button class="btn btn-sm">
-			                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
-			                                                        <path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,128v80a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h80a8,8,0,0,1,0,16H48V208H208V128a8,8,0,0,1,16,0Z">   
-			                                                        </path>
-			                                                    </svg>
-			                                                </button>
-			                                            </div>
-			                                            <div class="progress mb-2" style="height: 10px;">
-			                                                <div class="progress-bar bg-success" role="progressbar" style="width: 64%" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100"></div>
-			                                            </div>
-			                                            <p class="book-progress mb-0">64% (473/679 페이지)</p>
-			                                        </div>
-			                                    </div>
-			                                </c:forEach>
-			                            </div>
-			                            <div class="text-end mt-3">
-			                                <button class="btn btn-sm btn-outline-primary">⇅정렬</button>
-			                            </div>
-			                        </div>
-
-			                        <!-- 읽고 싶은 책 탭 팬 -->
-			                        <div class="tab-pane fade" id="nav-wishlist" role="tabpanel" aria-labelledby="nav-wishlist-tab" tabindex="0">
-			                            <div id="wish-list">
-			                                <c:forEach var="book" items="${wishlistBooks}">
-			                                    <div class="book-item d-flex align-items-start mb-4">
-			                                        <img src="${book.bfrealname}" alt="책 표지" class="book-cover me-3" style="width: 100px; height: 150px;">
-			                                        <div class="book-info flex-grow-1">
-			                                            <div class="d-flex justify-content-between align-items-start">
-			                                                <div>
-			                                                    <h5 class="book-title">${book.bookTitle}</h5>
-			                                                    <p class="book-author mb-1">${book.writer}</p>
-			                                                    <p class="book-added-date mb-1">추가된 날짜: ${book.addedDate}</p>
-			                                                </div>
-			                                                <button class="btn btn-sm">
-			                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
-			                                                        <path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,128v80a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h80a8,8,0,0,1,0,16H48V208H208V128a8,8,0,0,1,16,0Z">
-			                                                        </path>
-			                                                    </svg>
-			                                                </button>
-			                                            </div>
-			                                        </div>
-			                                    </div>
-			                                </c:forEach>
-			                            </div>
-			                            <div class="text-end mt-3">
-			                                <button class="btn btn-sm btn-outline-primary">⇅정렬</button>
-			                            </div>
-			                        </div>
+									<!-- 읽고 싶은 책 탭 팬 -->
+									<div class="tab-pane fade" id="nav-wishlist" role="tabpanel" aria-labelledby="nav-wishlist-tab" tabindex="0">
+									    <div class="text-end mt-3">
+									        <div class="btn-group" role="group">
+									            <input type="radio" class="btn-check" name="sort-wishlist" id="alphabeticalWishlist" autocomplete="off" checked>
+									            <label class="btn btn-outline-secondary btn-sm" for="alphabeticalWishlist">가나다순</label>
+									            <input type="radio" class="btn-check" name="sort-wishlist" id="addedDateWishlist" autocomplete="off">
+									            <label class="btn btn-outline-secondary btn-sm" for="addedDateWishlist">추가된 날짜순</label>
+									        </div>
+									    </div>
+									    <div id="wishlist-list">
+									        <c:choose>
+									            <c:when test="${not empty wishlistBooks}">
+									                <c:forEach var="book" items="${wishlistBooks}">
+									                    <div class="book-item d-flex align-items-start mb-4">
+									                        <img src="${book.bname}" alt="책 표지" class="book-cover me-3" style="width: 100px; height: 150px;">
+									                        <div class="book-info flex-grow-1">
+									                            <div class="d-flex justify-content-between align-items-start">
+									                                <div>
+									                                    <h5 class="book-title">${book.bookTitle}</h5>
+									                                    <p class="book-author mb-1">${book.writer}</p>
+									                                    <p class="book-added-date mb-1">추가한 날짜: <span class="added-date">${book.addedDate}</span></p>
+									                                </div>
+									                                <button class="btn btn-sm">
+									                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+									                                        <path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,128v80a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h80a8,8,0,0,1,0,16H48V208H208V128a8,8,0,0,1,16,0Z"></path>
+									                                    </svg>
+									                                </button>
+									                            </div>
+									                        </div>
+									                    </div>
+									                </c:forEach>
+									            </c:when>
+									            <c:otherwise>
+									                <div id="without-data">
+									                    <p>읽고 싶은 책이 없습니다!</p>
+									                    <div class="d-flex justify-content-center">
+									                        <a href="#" class="btn btn-primary mx-2">베스트셀러 구경하러 가기</a>
+									                        <a href="#" class="btn btn-secondary mx-2">추천 받기</a>
+									                        <a href="#" class="btn btn-success mx-2">읽고 싶은 책 등록하기</a>
+									                    </div>
+									                </div>
+									            </c:otherwise>
+									        </c:choose>
+									    </div>
+									</div>
 			                    </div> <!-- end of tab-content -->
 			                </div>
 			            </div>
@@ -263,8 +279,6 @@ pageEncoding="UTF-8"%>
 			    </div>
 
 			</div>
-
-       
         
                               
 			<!-- Nav Sidebar -->

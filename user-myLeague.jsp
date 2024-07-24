@@ -42,51 +42,7 @@ pageEncoding="UTF-8"%>
             <!-- navbar -->
             <div class="elements-nav">
                 <!-- bootom nav -->
-				<nav class="navbar navbar-expand bottom-nav bg-black borer-bottom border-opacity-10 border-white py-lg-0 py-3 bg-opacity-25">
-				                    <div class="container">
-				                        <div class="position-relative d-flex align-items-center gap-2 site-brand">
-				                            <img src="" alt="북북북 로고" />
-											<!--../img/bookbookbookLogo.png-->
-				                            <div class="lh-1">
-				                               <h5 class="fw-bold m-0 text-white">BOOKBOOKBOOK</h5>
-				                               <!-- <small class="text-muted text-white-50">One Page</small> -->
-				                            </div>
-				                            <a class="stretched-link" href="/"></a>
-				                        </div>
-						
-						
-                        <div class="collapse navbar-collapse">
-                            <ul class="navbar-nav m-auto gap-4 m-none">
-								<li class="nav-item dropdown single-dropdown-nav">
-								                          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 나의 서재 </a>
-								                          <ul class="dropdown-menu">
-								                              <li><a class="dropdown-item" href="pages/portfolio-full-width.html">읽은 책</a></li>
-								                              <li><a class="dropdown-item" href="pages/portfolio-boxed.html">읽고 있는 책</a></li>
-								                              <li><a class="dropdown-item" href="pages/portfolio-classic.html">읽고 싶은 책</a></li>
-								                          </ul>
-								                      </li>
-    
-                                    <a class="nav-link " href="#" role="button" aria-expanded="false"> 나의 캐릭터 </a>
-                                   
-								
-								
-								<li class="nav-item dropdown single-dropdown-nav">
-								                           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 나의 정보 </a>
-								                           <ul class="dropdown-menu">
-								                               <li><a class="dropdown-item" href="pages/portfolio-full-width.html">나의 정보</a></li>
-								                               <li><a class="dropdown-item" href="pages/portfolio-boxed.html">나의 달력</a></li>
-								                               <li><a class="dropdown-item" href="pages/portfolio-classic.html">나의 메모</a></li>
-								                               <li><a class="dropdown-item" href="pages/portfolio-classic.html">나의 통계</a></li>
-								                           </ul>
-								                       </li>
-														</ul>
-													</li>
-												</ul>
-                            <a href="index.html" class="btn btn-purple rounded-pill d-none d-lg-block btn-theme"> <i class="ri-shopping-cart-line me-2"></i> Purchase Now </a>
-                            <a href="#" class="link-light d-lg-none ms-auto" data-bs-toggle="offcanvas" data-bs-target="#sidebarnav" aria-controls="sidebarnav"><i class="ri-menu-3-line ri-lg"></i></a>
-                        </div>
-                    </div>
-                </nav>
+				<%@ include file="../header.jsp" %>
             </div>
             <!-- header -->
 			<div class="w-100">

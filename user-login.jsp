@@ -267,7 +267,7 @@
 			            success: function(result) {
 			                if (result.success) {
 			                    localStorage.setItem('userName', result.userName);
-			                    window.location.href = "/main";
+			                    window.location.href = "/";
 			                } else {
 			                    alert(result.message);
 			                }

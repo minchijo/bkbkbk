@@ -1,4 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" href="../img/pages/icon.png" type="image/png">
-        <title>북북북 | 도서 추천</title>
+        <title>북북북 | 카테고리별 도서</title>
         <!-- Bootstrap Css -->
         <link rel="stylesheet" href="../vender/bootstrap/css/bootstrap.min.css">
         <!-- Icofont Css -->
@@ -20,6 +21,29 @@
 		<link rel="stylesheet" href="../css/style2.css">
         <!-- Common Css -->
         <link rel="stylesheet" href="../css/common.css">
+
+		<style>
+		@font-face {
+			     font-family: 'DungGeunMo';
+			     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+			     font-weight: normal;
+			     font-style: normal;
+		}
+
+		div{
+			font-family: 'DungGeunMo';
+		}
+
+		#bookList{
+			overflow-y:auto;
+			height: 59em;
+		}
+		.active .page-link{
+			background-color: white;
+			border-color: #e74c3c;
+		}
+		
+		</style>
     </head>
     <body>
         
@@ -27,52 +51,15 @@
             <!-- navbar -->
             <div class="elements-nav">
                 <!-- bootom nav -->
-                <nav class="navbar navbar-expand bottom-nav bg-black borer-bottom border-opacity-10 border-white py-lg-0 py-3 bg-opacity-25">
-                    <div class="container">
-                        <div class="position-relative d-flex align-items-center gap-2 site-brand">
-                            <img src="../img/bookbookbookLogo.png" alt="북북북 로고"/>
-                            <div class="lh-1">
-                               <h5 class="fw-bold m-0 text-white">BOOKBOOKBOOK</h5>
-                               <!-- <small class="text-muted text-white-50">One Page</small> -->
-                            </div>
-                            <a class="stretched-link" href="/"></a>
-                        </div>
-                        <div class="collapse navbar-collapse">
-                            <ul class="navbar-nav m-auto gap-4 m-none">
-                                <li class="nav-item dropdown single-dropdown-nav">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 나의 서재 </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="shop-product-grid.html">읽은 책</a></li>
-                                        <li><a class="dropdown-item" href="shop-product-list.html">읽고 있는 책</a></li>
-                                        <li><a class="dropdown-item" href="shop-product-full-three-coulmn.html">읽고 싶은 책</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a class="nav-link" href="#" role="button" aria-expanded="false"> 나의 캐릭터 </a>
-                                </li>
-                                <li class="nav-item dropdown single-dropdown-nav">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 나의 정보 </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="shop-product-grid.html">나의 정보</a></li>
-                                        <li><a class="dropdown-item" href="shop-product-list.html">나의 달력</a></li>
-                                        <li><a class="dropdown-item" href="shop-product-full-three-coulmn.html">나의 메모</a></li>
-                                        <li><a class="dropdown-item" href="shop-product-full-four-coulmn.html">나의 통계</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <a href="./page-login.html" class="btn btn-purple rounded-pill d-none d-lg-block btn-theme"> 로그인 </a>
-                            <a href="#" class="link-light d-lg-none ms-auto" data-bs-toggle="offcanvas" data-bs-target="#sidebarnav" aria-controls="sidebarnav"><i class="ri-menu-3-line ri-lg"></i></a>
-                        </div>
-                    </div>
-                </nav>
+               <%@ include file="../header.jsp" %>
             </div>
             <!-- header -->
-            <div class="py-5">
+            <div class=" py-5">
                 <div class="container py-5">
                     <div class="row align-items-center justify-content-center">
                         <div class="col-xl-6 col-lg-5 col-md-10 col-12 text-center">
                             <div class="text-white">
-                                <h1 class="fw-bolder display-5 mb-3">카테고리별 도서 추천</h1>
+                                <h1 class="text-white fw-bolder display-5 mb-3">카테고리별 도서 추천</h1>
                                 <!-- <p class="m-0 text-white-50">Last updated: January 2024</p> -->
                             </div>
                         </div>
@@ -102,31 +89,9 @@
                                           </h2>
                                           <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
-                                                <ul class="list-unstyled m-0">
-                                                    <li class="mb-1"><a href="#" class="text-dark">건강/취미 </a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">경제경영 </a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">과학</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">대학교재</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">만화</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">사회과학</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">소설/시/희곡</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">어린이</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">에세이</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">여행</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">역사</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">예술/대중문화</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">외국어</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">요리/살림</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">유아</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">인문학</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">자기계발</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">잡지</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">장르소설</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">종교/역학</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">좋은부모</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">청소년</a></li>
-                                                    <li class="mb-1"><a href="#" class="text-dark">컴퓨터/모바일</a></li>
-                                                </ul>
+                                                <ul id="depth_first" class="list-unstyled m-0">
+													
+												</ul>
                                             </div>
                                           </div>
                                         </div>
@@ -136,267 +101,51 @@
                                                   카테고리 중분류
                                               </button>
                                             </h2>
-                                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                            <div id="collapseTwo" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                                               <div class="accordion-body">
-                                                  <ul class="list-unstyled m-0">
-                                                      <li class="mb-1"><a href="#" class="text-dark">중분류 카테고리 항목 출력해오기 </a></li>
-													  <li class="mb-1"><a href="#" class="text-dark">{category.middle}</a></li>
-                                                      <li class="mb-1"><a href="#" class="text-dark">Books, Magazines </a></li>
-                                                      <li class="mb-1"><a href="#" class="text-dark"></a></li>
+                                                  <ul id="depth_second" class="list-unstyled m-0">
+                                                      <!--<li class="mb-1"><a href="#" class="text-dark">중분류 카테고리 항목 출력해오기 </a></li>-->
                                                   </ul>
                                               </div>
                                             </div>
-                                          </div>
-                                          <div class="accordion-item">
+                                      	</div><!--카테고리 중분류-->
+										
+										<div class="accordion-item">
                                             <h2 class="accordion-header">
                                               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                                   카테고리 소분류
                                               </button>
                                             </h2>
-                                            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                            <div id="collapseThree" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                                               <div class="accordion-body">
-                                                  <ul class="list-unstyled m-0">
-                                                      <li class="mb-1"><a href="#" class="text-dark">소분류 카테고리 항목 출력해오기 </a></li>
-                                                      <li class="mb-1"><a href="#" class="text-dark">Home items </a></li>
-                                                      <li class="mb-1"><a href="#" class="text-dark">Books, Magazines </a></li>
-                                                      <li class="mb-1"><a href="#" class="text-dark"></a></li>
-                                                      
+                                                  <ul id="depth_third" class="list-unstyled m-0">
+                                                      <!--<li class="mb-1"><a href="#" class="text-dark">중분류 카테고리 항목 출력해오기 </a></li>-->
                                                   </ul>
                                               </div>
                                             </div>
-                                          </div>
-                                          <div class="accordion-item">
-                                            <h2 class="accordion-header">
-                                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThreew" aria-expanded="false" aria-controls="collapseThreew">
-                                                평점
-                                              </button>
-                                            </h2>
-                                            <div id="collapseThreew" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                                              <div class="accordion-body">
-                                                <!-- Default checkbox -->
-                                                <div class="form-check mb-2">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                        <i class="ri-star-fill text-warning"></i><i class="ri-star-fill text-warning"></i><i class="ri-star-fill text-warning"></i><i class="ri-star-fill text-warning"></i><i class="ri-star-fill text-warning"></i>
-                                                    </label>
-                                                </div>
-                                                <!-- Default checkbox -->
-                                                <div class="form-check mb-2">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                        <i class="ri-star-fill text-warning"></i><i class="ri-star-fill text-warning"></i><i class="ri-star-fill text-warning"></i><i class="ri-star-fill text-warning"></i><i class="ri-star-fill text-secondary"></i>
-                                                    </label>
-                                                </div>
-                                                <!-- Default checkbox -->
-                                                <div class="form-check mb-2">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                        <i class="ri-star-fill text-warning"></i><i class="ri-star-fill text-warning"></i><i class="ri-star-fill text-warning"></i><i class="ri-star-fill text-secondary"></i><i class="ri-star-fill text-secondary"></i>
-                                                    </label>
-                                                </div>
-                                                <!-- Default checkbox -->
-                                                <div class="form-check mb-2">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                        <i class="ri-star-fill text-warning"></i><i class="ri-star-fill text-warning"></i><i class="ri-star-fill text-secondary"></i><i class="ri-star-fill text-secondary"></i><i class="ri-star-fill text-secondary"></i>
-                                                    </label>
-                                                </div>
-                                                <!-- Default checkbox -->
-                                                <div class="form-check mb-0">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                        <i class="ri-star-fill text-warning"></i><i class="ri-star-fill text-secondary"></i><i class="ri-star-fill text-secondary"></i><i class="ri-star-fill text-secondary"></i><i class="ri-star-fill text-secondary"></i>
-                                                    </label>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
+                                      	</div><!--카테고리 소분류-->
+										
                                       </div>
                                   </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-9 col-12">
+                    <div class="bg-light col-lg-9 col-12">
                         <div class="p-3">
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <small>선택하신 분야에 맞는 책은 다음과 같습니다.</small>
-                                <select class="form-select w-25" aria-label="Default select example">
+                                <select id="select" class="form-select w-25" aria-label="Default select example">
                                     <option selected>정렬</option>
-                                    <option value="1">이름 오름차순 정렬</option>
-                                    <option value="2">이름 내림차순 정렬</option>
-                                    <option value="3">발매일 순 정렬</option>
-                                    <option value="4">평점 순 정렬</option>
-                                    <option value="5">페이지 수 많은 순 정렬</option>
+                                    <option value="titleAsc">이름 오름차순 정렬</option>
+                                    <option value="titleDesc">이름 내림차순 정렬</option>
+                                    <option value="pubAsc">발매일 순 정렬</option>
                                 </select>
                             </div>
-                            <div class="row g-4">
-                                <div class="col-lg-4 col-md-6 col-12">
-                                    <div class="card bg-transparent border-0 h-100">
-                                        <a href="shop-product-detail.html" class="position-relative">
-                                            <span class="badge bg-purple rounded-1 p-2 position-absolute m-3">인기도서</span> <img src="../img/pages/products/product-1.jpg" class="card-img-top rounded" alt="featured-1">
-                                        </a>
-                                        <div class="card-body px-0">
-                                            <div class="d-flex align-items-center gap-2 mb-2">
-                                                <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i>
-                                                <i class="ri-star-fill text-warning"></i>
-                                            </div>
-                                            <h6 class="card-title lh-base">데이터 가져와서 출력 하기</h6>
-                                            <p class="card-text">
-                                                $70.00 <span class="text-muted small"><del>$80.00</del></span>
-                                            </p>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12">
-                                    <div class="card bg-transparent border-0 h-100">
-                                        <a href="shop-product-detail.html"> <img src="../img/pages/products/product-2.jpg" class="card-img-top rounded" alt="featured-1"> </a>
-                                        <div class="card-body px-0">
-                                            <div class="d-flex align-items-center gap-2 mb-2">
-                                                <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-half-line text-warning"></i>
-                                                <i class="ri-star-fill text-body-tertiary"></i>
-                                            </div>
-                                            <h6 class="card-title lh-base">when an unknown printer took a galley of type.</h6>
-                                            <p class="card-text">
-                                                $55.00 <span class="text-muted small"><del>$65.00</del></span>
-                                            </p>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12">
-                                    <div class="card bg-transparent border-0 h-100">
-                                        <a href="shop-product-detail.html" class="position-relative">
-                                            <span class="badge bg-purple rounded-1 p-2 position-absolute m-3">SALE!</span> <img src="../img/pages/products/product-3.jpg" class="card-img-top rounded" alt="featured-1">
-                                        </a>
-                                        <div class="card-body px-0">
-                                            <div class="d-flex align-items-center gap-2 mb-2">
-                                                <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-body-tertiary"></i>
-                                                <i class="ri-star-fill text-body-tertiary"></i>
-                                            </div>
-                                            <h6 class="card-title lh-base">Lorem ipsum dolor sit amet consectetur.</h6>
-                                            <p class="card-text">
-                                                $45.00 <span class="text-muted small"><del>$60.00</del></span>
-                                            </p>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12">
-                                    <div class="card bg-transparent border-0 h-100">
-                                        <a href="shop-product-detail.html" class="position-relative">
-                                            <span class="badge bg-purple rounded-1 p-2 position-absolute m-3">SALE!</span> <img src="../img/pages/products/product-4.jpg" class="card-img-top rounded" alt="featured-1">
-                                        </a>
-                                        <div class="card-body px-0">
-                                            <div class="d-flex align-items-center gap-2 mb-2">
-                                                <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i>
-                                                <i class="ri-star-fill text-body-tertiary"></i>
-                                            </div>
-                                            <h6 class="card-title lh-base">Lorem ipsum dolor sit amet consectetur adipisicing.</h6>
-                                            <p class="card-text">
-                                                $35.00 <span class="text-muted small"><del>$40.00</del></span>
-                                            </p>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12">
-                                    <div class="card bg-transparent border-0 h-100">
-                                        <a href="shop-product-detail.html" class="position-relative">
-                                            <span class="badge bg-purple rounded-1 p-2 position-absolute m-3">SALE!</span> <img src="../img/pages/products/product-5.jpg" class="card-img-top rounded" alt="featured-1">
-                                        </a>
-                                        <div class="card-body px-0">
-                                            <div class="d-flex align-items-center gap-2 mb-2">
-                                                <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i>
-                                                <i class="ri-star-fill text-warning"></i>
-                                            </div>
-                                            <h6 class="card-title lh-base">Lorem Ipsum is simply dummy text of the printing.</h6>
-                                            <p class="card-text">
-                                                $70.00 <span class="text-muted small"><del>$80.00</del></span>
-                                            </p>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12">
-                                    <div class="card bg-transparent border-0 h-100">
-                                        <a href="shop-product-detail.html"> <img src="../img/pages/products/product-6.jpg" class="card-img-top rounded" alt="featured-1"> </a>
-                                        <div class="card-body px-0">
-                                            <div class="d-flex align-items-center gap-2 mb-2">
-                                                <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-half-line text-warning"></i>
-                                                <i class="ri-star-fill text-body-tertiary"></i>
-                                            </div>
-                                            <h6 class="card-title lh-base">when an unknown printer took a galley of type.</h6>
-                                            <p class="card-text">
-                                                $55.00 <span class="text-muted small"><del>$65.00</del></span>
-                                            </p>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12">
-                                    <div class="card bg-transparent border-0 h-100">
-                                        <a href="shop-product-detail.html" class="position-relative">
-                                            <span class="badge bg-purple rounded-1 p-2 position-absolute m-3">SALE!</span> <img src="../img/pages/products/product-7.jpg" class="card-img-top rounded" alt="featured-1">
-                                        </a>
-                                        <div class="card-body px-0">
-                                            <div class="d-flex align-items-center gap-2 mb-2">
-                                                <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-body-tertiary"></i>
-                                                <i class="ri-star-fill text-body-tertiary"></i>
-                                            </div>
-                                            <h6 class="card-title lh-base">Lorem ipsum dolor sit amet consectetur.</h6>
-                                            <p class="card-text">
-                                                $45.00 <span class="text-muted small"><del>$60.00</del></span>
-                                            </p>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12">
-                                    <div class="card bg-transparent border-0 h-100">
-                                        <a href="shop-product-detail.html" class="position-relative">
-                                            <span class="badge bg-purple rounded-1 p-2 position-absolute m-3">SALE!</span> <img src="../img/pages/products/product-8.jpg" class="card-img-top rounded" alt="featured-1">
-                                        </a>
-                                        <div class="card-body px-0">
-                                            <div class="d-flex align-items-center gap-2 mb-2">
-                                                <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i>
-                                                <i class="ri-star-fill text-body-tertiary"></i>
-                                            </div>
-                                            <h6 class="card-title lh-base">Lorem ipsum dolor sit amet consectetur adipisicing.</h6>
-                                            <p class="card-text">
-                                                $35.00 <span class="text-muted small"><del>$40.00</del></span>
-                                            </p>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12">
-                                    <div class="card bg-transparent border-0 h-100">
-                                        <a href="shop-product-detail.html" class="position-relative">
-                                            <span class="badge bg-purple rounded-1 p-2 position-absolute m-3">SALE!</span> <img src="../img/pages/products/product-1.jpg" class="card-img-top rounded" alt="featured-1">
-                                        </a>
-                                        <div class="card-body px-0">
-                                            <div class="d-flex align-items-center gap-2 mb-2">
-                                                <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-warning"></i> <i class="ri-star-fill text-body-tertiary"></i>
-                                                <i class="ri-star-fill text-body-tertiary"></i>
-                                            </div>
-                                            <h6 class="card-title lh-base">Lorem ipsum dolor sit amet consectetur.</h6>
-                                            <p class="card-text">
-                                                $45.00 <span class="text-muted small"><del>$60.00</del></span>
-                                            </p>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="text-center mt-5 mb-5">
-                                        <!-- <div class="spinner-border" role="status">
-                                          <span class="visually-hidden">Loading...</span>
-                                        </div> -->
-                                    </div>
-                                </div>
-                            </div>
+                        <div id="bookList" class="row g-4">    
                         </div>
+                    </div>
+					<div id="paginationContainer"></div>
+						
                     </div>
                 </div>
             </div>
@@ -412,7 +161,71 @@
         </div>
         
         <!-- Nav Sidebar -->
-		<%@ include file="../navSidebar.jsp" %>
+        <div class="offcanvas offcanvas-top bg-purple text-white border-0 h-100" tabindex="-1" id="sidebarnav" aria-labelledby="sidebarnavLabel">
+            <div class="offcanvas-header d-flex justify-content-end">
+                <a href="#" class="link-light" data-bs-dismiss="offcanvas" aria-label="Close"><i class="ri-close-line ri-lg"></i></a>
+            </div>
+            <div class="offcanvas-body">
+                <div class="sidebar-nav text-center">
+                    <div class="position-relative d-flex align-items-center gap-2 site-brand">
+                            <!--<i class="ri-slideshow-line fs-2 lh-1 text-white"></i>-->
+                            <div class="lh-1">
+                               <h5 class="fw-bold m-0 text-white">BOOKBOOKBOOK</h5>
+                            </div>
+                            <a class="stretched-link" href="../index.html"></a>
+                        </div>
+                    <ul class="navbar-nav justify-content-end flex-grow-1 mt-4">
+                        <li class="nav-item dropdown osahan-mega-menu position-static">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 나의 서재  </a>
+                            <ul class="dropdown-menu w-100 m-0 border-opacity-10 border-dark border-top border-bottom p-0 start-0 end-0 rounded-0 shadow">
+                                <li>
+                                    <div class="dropdown-mega-content container">
+                                        <div class="row g-0">
+                                            <div class="col-lg-3 p-5 border-end border-start border-opacity-10 border-dark">
+                                                <!--<h6 class="dropdown-mega-sub-title mb-3 fw-bold">Elements 1</h6>-->
+                                                <ul class="dropdown-mega-sub-nav list-unstyled">
+                                                    <li><a class="dropdown-item px-0 py-1 bg-transparent" href="../elements/elements-accordions-toggles.html">읽은 책</a></li>
+                                                    <li><a class="dropdown-item px-0 py-1 bg-transparent" href="../elements/elements-tabs.html">읽고 있는 책</a></li>
+                                                    <li><a class="dropdown-item px-0 py-1 bg-transparent" href="../elements/elements-icons.html">읽고 싶은 책</a></li>
+                                                    </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown single-dropdown-nav">
+                            <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 나의 캐릭터 </a>
+                          
+                        </li>
+                        <li class="nav-item dropdown osahan-mega-menu position-static">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 나의 정보 </a>
+                            <ul class="dropdown-menu w-100 m-0 border-opacity-10 border-dark border-top border-bottom p-0 start-0 end-0 rounded-0 shadow">
+                                <li>
+                                    <div class="dropdown-mega-content container">
+                                        <div class="row g-0">
+                                            <div class="col-lg-3 p-5 border-end border-start border-opacity-10 border-dark">
+                                               <!-- <h6 class="dropdown-mega-sub-title mb-3 fw-bold">Portfolio</h6>-->
+                                                <ul class="dropdown-mega-sub-nav list-unstyled">
+                                                    <li><a class="dropdown-item px-0 py-1 bg-transparent" href="portfolio-full-width.html">나의 정보 수정</a></li>
+                                                    <li><a class="dropdown-item px-0 py-1 bg-transparent" href="portfolio-boxed.html">나의 달력</a></li>
+                                                    <li><a class="dropdown-item px-0 py-1 bg-transparent" href="portfolio-classic.html">나의 메모</a></li>
+                                                    <li><a class="dropdown-item px-0 py-1 bg-transparent" href="portfolio-masonry.html">나의 통계</a></li>
+                                                </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center justify-content-center gap-3 my-4">
+                        <a href="#" class="link-light"><i class="ri-facebook-circle-fill"></i></a> <a href="#" class="link-light"><i class="ri-twitter-fill"></i></a> <a href="#" class="link-light"><i class="ri-instagram-fill"></i></a>
+                        <a href="#" class="link-light"><i class="ri-linkedin-box-fill"></i></a>
+                    </div>
+                    <a href="../index.html" class="btn btn-warning rounded-0"> <i class="ri-door-line me-2"></i> 로그아웃 </a>
+                </div>
+            </div>
+        </div>
         
 		<!-- 푸터 포함 -->
 		<%@ include file="../footer.jsp" %>
@@ -425,6 +238,227 @@
         <script src="../vender/aos/dist/aos.js"></script>
         <!-- Custom Js -->
         <script src="../js/script.js"></script>
+		<script>
+			var sort_first='';
+			var sort_second='';
+			var sort_third='';
+			var sortType='';
+			
+			$(document).ready(function() {
+				$.ajax({
+					url:'/loadCategory',
+					method:'POST',
+					success:function(data){
+						var cateHtml ='';
+						for(let i=0; i<data.length;i++){
+							cateHtml+='<li class="mb-1"><a href="#" class="text-dark" name="'+data[i].interestNum1+'">'+data[i].interestNum1+'</a></li>'
+						}
+						$('#depth_first').html(cateHtml); 
+						
+						
+						$('a[name]').on('click',function(e) {
+				            e.preventDefault();
+				            var categoryFirst = $(this).attr('name');//categoryFirst이 대분류
+							sort_first=categoryFirst;
+							//대분류 선택 시 중분류 목록 가져오는 함수
+				            loadCategoryData(categoryFirst);
+		       			 });//end of click
+					},
+					erorr: function(err){
+						console.log(err);
+					}
+				});//end of ajax
+				
+				   
+				
+				$('#select').change(function(){
+					sortType= $(this).val();
+					cateBookList(sort_first, sort_second, sort_third, sortType);
+				});//end of change
+			});
+				
+				
+				//대분류 선택 시 중분류 목록 가져오는 함수
+			    function loadCategoryData(categoryFirst) {
+			        $.ajax({
+			            url: '/loadCategoryData',  // 서버 측 엔드포인트 URL
+			            method: 'POST',
+			            data: { category: categoryFirst },
+			            success: function(data) {
+							var html = '<ul class="list-unstyled">';  // 리스트 시작
+				            for (var i = 0; i < data.length; i++) {
+				                html += '<li class="list-unstyled mb-1"><a href="#" class="text-dark" data-value="'+data[i].interestNum2+'">' + data[i].interestNum2 + '</a></li>';
+				            }
+				            html += '</ul>';
+				            $('#depth_second').html(html);  // #depth_second에 HTML 추가
+							
+							// 생성된 <a> 태그에 클릭 이벤트 추가
+				            $('a[data-value]').click(function(e){
+				                e.preventDefault();
+				                var categorySecond = $(this).attr('data-value');//categorySecond는 중분류
+								sort_second=categorySecond;
+				                // 중분류 선택 시 책을 가져오는 함수 호출
+				                loadCategoryDataSecond(categoryFirst, categorySecond);      
+				            });
+						},
+			            error: function(err) {
+			                console.error('Failed to load category data1:', err);
+			            }
+			        });//end of ajax
+			    }//end of loadCategoryData
+				
+				//중분류 선택 시 
+				function loadCategoryDataSecond(categoryFirst, categorySecond){
+					$.ajax({
+						url:'/loadCategoryDataSecond',
+						method:'get',
+						data:{categoryFirst: categoryFirst, categorySecond: categorySecond},
+						success:function(data){
+							var html = '<ul class="list-unstyled">';  // 리스트 시작
+				            for (var i = 0; i < data.length; i++) {
+								if(i===0 || data[i].interestNum3 != data[i-1].interestNum3){
+				                html += '<li class="list-unstyled mb-1"><a href="#" class="text-dark" cateThird="'+data[i].interestNum3+'">' + data[i].interestNum3 + '</a></li>';
+								}
+				            }
+				            html += '</ul>';
+				            $('#depth_third').html(html);  // #depth_second에 HTML 추가
+							
+							// 생성된 <a> 태그에 클릭 이벤트 추가
+				            $('a[cateThird]').click(function(e){
+				                e.preventDefault();
+				                var categoryThird = $(this).attr('cateThird');//categoryThird는 소분류
+								sort_third=categoryThird;
+								//소분류 선택 시 책 가져오는 함수 호출
+								cateBookList(sort_first, sort_second, sort_third, sortType)   
+				            });
+							
+						},
+						error:function(err){
+							console.error('Failed to load category data2:', err);
+						}
+					})//end of ajax
+				}
+				
+				//소분류 선택 시 책을 가져오는 함수
+				function cateBookList(sort_first, sort_second, sort_third, sortType){
+					$.ajax({
+						url:'/loadCateBookList',
+						method:'get',
+						data: {categoryFirst: sort_first, categorySecond: sort_second, categoryThird: sort_third, sortType: sortType},
+						success:function(data){
+								//한 페이지에 9개씩 출력
+					            var itemsPerPage = 9; 
+					            var currentPage = 1;
+
+								//화면에 출력
+					            function displayPage(page) {
+									var bookData='';
+					                var startIndex = (page - 1) * itemsPerPage;
+					                var endIndex = startIndex + itemsPerPage;
+					                var slicedData = data.slice(startIndex, endIndex);
+									if(slicedData.length==0){
+										bookData="<h3>해당하는 데이터가 없습니다.</h3>";
+									}else{
+									//목록 출력
+									for(let i=0; i<slicedData.length;i++){
+									var bookImage = slicedData[i].bname ? '<img src="'+slicedData[i].bname+'" class="rounded" alt="'+slicedData[i].bookTitle+'의 표지">' : '<img src="../img/noimage.jpg" class="rounded" alt="등록된 이미지가 없습니다.">'
+																			
+									bookData += '<div class="col-lg-4 col-md-6 col-12">'+
+					                                    '<div class="card bg-transparent border-0 h-100">'+
+					                                        '<a href="/pages/book-bookDetail?bookNum='+slicedData[i].bookNum+'" class="position-relative">'+ //상세페이지로 수정. isbn값으로 넘기기
+																bookImage+
+					                                        	'<div class="card-body px-0">'+
+					                                            '<h6 class="text-purple card-title lh-base">'+slicedData[i].bookTitle+'</h6>'+
+																'</a>'+
+					                                            '<p class="card-text">'+
+					                                                slicedData[i].writer+'<br/><span class="text-muted small">'+slicedData[i].publisher+'</span>'+
+					                                            '</p>'+
+					                                        '</div>'+
+					                                    '</div>'+
+					                               '</div>'
+									}//end of for
+									}//end of if
+									$('#bookList').html(bookData);
+								}//end of displayPage
+								
+								// 처음 페이지 로드
+						        displayPage(currentPage);
+
+						            // 페이지네이션 UI 생성 (Bootstrap Pagination 사용)
+						            function renderPagination() {
+						                var totalPages = Math.ceil(data.length / itemsPerPage);//소수점 올림
+										var range = 2; // 현재 페이지를 중심으로 표시할 범위 (현재 페이지 앞뒤로 몇 페이지씩 보여줄지)
+										var maxPagesToShow = 5; // 표시할 최대 페이지 수
+
+										    var paginationHtml = '<nav aria-label="Page navigation example"><ul class="pagination align-items-center justify-content-center" style="margin-left: 3rem;">';
+										    
+										    // 이전 페이지 버튼
+										    paginationHtml += '<li class="page-item"><a class="text-purple page-link" href="#" aria-label="Previous" id="prevPage"><span aria-hidden="true">&laquo;</span></a></li>';
+
+										    // 현재 페이지 기준으로 범위 내의 페이지 번호 추가
+										    var startPage = Math.max(1, currentPage - range);
+										    var endPage = Math.min(totalPages, currentPage + range);
+
+										    // 페이지 번호를 중앙에 맞추기 위한 보정
+										    if (endPage - startPage < maxPagesToShow - 1) {
+										        if (startPage === 1) {
+										            endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+										        } else if (endPage === totalPages) {
+										            startPage = Math.max(1, endPage - maxPagesToShow + 1);
+										        }
+										    }
+
+										    for (var i = startPage; i <= endPage; i++) {
+										        if (i === currentPage) {
+										            paginationHtml += '<li class="page-item active"><a class="text-purple page-link" href="#" data-page="' + i + '">' + i + '</a></li>';
+										        } else {
+										            paginationHtml += '<li class="page-item"><a class="text-purple page-link" href="#" data-page="' + i + '">' + i + '</a></li>';
+										        }
+										    }
+
+										    // 다음 페이지 버튼
+										    paginationHtml += '<li class="page-item"><a class="text-purple page-link" href="#" aria-label="Next" id="nextPage"><span aria-hidden="true">&raquo;</span></a></li>';
+										    paginationHtml += '</ul></nav>';
+						                $('#paginationContainer').html(paginationHtml);
+
+						                // 페이지 번호 클릭 시 해당 페이지 데이터 표시
+						                $('a[data-page]').click(function(e) {
+						                    e.preventDefault();
+						                    currentPage = parseInt($(this).attr('data-page'));
+						                    displayPage(currentPage);
+											renderPagination()
+						                });
+
+						                // 이전 페이지 버튼 클릭 시
+						                $('#prevPage').click(function(e) {
+						                    e.preventDefault();
+						                    if (currentPage > 1) {
+						                        currentPage--;
+						                        displayPage(currentPage);
+												renderPagination()
+						                    }
+						                });
+
+						                // 다음 페이지 버튼 클릭 시
+						                $('#nextPage').click(function(e) {
+						                    e.preventDefault();
+						                    if (currentPage < totalPages) {
+						                        currentPage++;
+						                        displayPage(currentPage);
+												renderPagination()
+						                    }
+						                });
+						            }//end of renderPagination
+
+						            // 페이지네이션 UI 초기 렌더링
+						            renderPagination();
+						},//end of success,
+						error: function(err) {
+			                console.error('Failed to load category data:', err);
+			            }
+					});//end of ajax
+				}//end of cateBookList
+		</script>
     </body>
 	
 </html>
