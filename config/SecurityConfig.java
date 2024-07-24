@@ -25,7 +25,11 @@ public class SecurityConfig {
                 .requestMatchers("/**").permitAll()
             )
             .formLogin(formLogin -> formLogin.disable())
-            .httpBasic(httpBasic -> httpBasic.disable());
+            .httpBasic(httpBasic -> httpBasic.disable())
+            .logout()
+               .logoutSuccessUrl("/")  // 로그아웃 성공 후 메인 페이지로 리다이렉트
+               .invalidateHttpSession(true)
+               .deleteCookies("JSESSIONID");
         
         return http.build();
     }
