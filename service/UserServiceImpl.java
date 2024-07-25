@@ -4,12 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.bookbookbook.dao.UserDAO;
+import com.bookbookbook.domain.CalendarVO;
+import com.bookbookbook.domain.MemoVO;
 import com.bookbookbook.domain.ReportVO;
 import com.bookbookbook.domain.UserVO;
 
@@ -27,7 +32,6 @@ public class UserServiceImpl implements UserService{
     private EmailService emailService;
     
     // UserDAO와 PasswordEncoder를 주입받는 생성자
-    @Autowired
     public UserServiceImpl(UserDAO userDAO, PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
         this.passwordEncoder = passwordEncoder;
@@ -48,6 +52,7 @@ public class UserServiceImpl implements UserService{
         UserVO user = userDAO.loginUser(userId);
         // 사용자 존재 여부와 비밀번호 일치 여부 확인
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+        	//System.out.println(passwordEncoder.matches(password, user.getPassword()));
             return user;
         }
         return null;
@@ -114,4 +119,50 @@ public class UserServiceImpl implements UserService{
 	public void submitReport(ReportVO vo) {
 		userDAO.submitReport(vo);
 	}
+	
+	//########################################
+	// 나의 달력
+		// 메모 정보 조회
+	public List<HashMap<String, Object>> getMemosAtCalendar(String userId){
+		List<HashMap<String, Object>> result = userDAO.getMemosAtCalendar(userId);
+		System.out.println("userServiceImpl 메모 정보 조회 : " + result);
+		return result;
+	}
+	
+		// 출석체크 데이터베이스에 저장
+	public boolean  markAttendance(String userId) {
+        System.out.println("userServiceImpl 호출");
+        Integer result = userDAO.insertAttendance(userId);
+        System.out.println("userServiceImpl 출석체크 저장 여부 : " + result);
+          
+        return result > 0;
+    }
+
+		// 데이터베이스에서 출석 정보 조회
+	public List<CalendarVO> getAttendanceList(String userId) {
+		System.out.println("userServiceImpl getAttendanceList 호출");
+	    List<CalendarVO> result = userDAO.getAttendanceList(userId);
+	    System.out.println("userServiceImpl 출석정보 조회 : " + result);
+	    return result;
+	}
+	
+	//########################################
+	// 나의 캐릭터
+		// userId로 userLevel에 따른 캐릭터 정보 조회
+	public List<HashMap<String, Object>> getCharactersByUserId(String userId) {
+		System.out.println("UserServiceImpl 호출");
+		List<HashMap<String, Object>> result = userDAO.getCharactersByUserId(userId);
+		System.out.println("UserServiceImpl result값 : " + result);
+	    return result;
+	}
+	
+		// 캐릭터 상세
+	public Map<String, Object> myCharactersDetail(Map<String, Object> params) {
+		System.out.println("myCharactersDetail 서비스 호출");
+		Map<String, Object> result = userDAO.myCharactersDetail(params);
+		System.out.println("myCharactersDetail 서비스 반환값 : " + result);
+		return result;
+	}
+
+
 }
