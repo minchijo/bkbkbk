@@ -18,6 +18,10 @@ public class MainServiceImpl implements MainService {
 		public List<ChatroomVO> getChatroom(){
 			return mainDAO.getChatroom();
 		}
+		//빈 방은 삭제
+		/*
+		 * public void emptyRoom() { mainDAO.emptyRoom(); }
+		 */
 		//채팅방 생성
 		public void createChatroom(ChatroomVO chat) {
 			mainDAO.createChatroom(chat);
@@ -29,5 +33,10 @@ public class MainServiceImpl implements MainService {
 		//채팅방 정보
 		public ChatroomVO getRoomInfo(String roomNum) {
 			return mainDAO.getRoomInfo(roomNum);
+		}
+		//채팅방 삭제
+		public void deleteChatroom(String roomNum) {
+			System.out.println(roomNum);
+			mainDAO.deleteChatroom(roomNum);
 		}
 }
